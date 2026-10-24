@@ -7,6 +7,14 @@ node_modules/
 coverage/
 *.lcov
 .nyc_output
+test-results/
+playwright-report/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Demo & recordings
+demo/
 
 # Next.js build output
 .next/

@@ -58,8 +58,14 @@ export function StressTestView({
   currency,
   weather,
 }: StressTestViewProps) {
-  const { overallRiskScore, overallRiskBand, summary, bufferAdequacy, itemRisks, totalExtraCost } =
-    stressResult;
+  const {
+    overallRiskScore,
+    overallRiskBand,
+    summary,
+    bufferAdequacy,
+    itemRisks,
+    totalExtraCost,
+  } = stressResult;
 
   const getScoreColor = (score: number) => {
     if (score <= 33) return "text-emerald-600 dark:text-emerald-400";
@@ -97,12 +103,16 @@ export function StressTestView({
               <div className="flex items-center space-x-2">
                 <Icon
                   className={`w-5 h-5 ${
-                    isActive ? "text-blue-600 dark:text-blue-400" : "text-slate-400"
+                    isActive
+                      ? "text-blue-600 dark:text-blue-400"
+                      : "text-slate-400"
                   }`}
                 />
                 <span
                   className={`text-xs sm:text-sm font-bold ${
-                    isActive ? "text-blue-700 dark:text-blue-300" : "text-slate-800 dark:text-slate-200"
+                    isActive
+                      ? "text-blue-700 dark:text-blue-300"
+                      : "text-slate-800 dark:text-slate-200"
                   }`}
                 >
                   {sc.label}
@@ -125,11 +135,14 @@ export function StressTestView({
               <div className="font-bold text-sky-900 dark:text-sky-200 flex items-center space-x-2">
                 <span>Weather Intelligence Integration</span>
                 <span className="px-1.5 py-0.5 rounded text-[10px] bg-sky-200 dark:bg-sky-900 text-sky-800 dark:text-sky-200 font-semibold uppercase">
-                  {weather.source === "live" ? "Live Forecast" : "Seasonal Model"}
+                  {weather.source === "live"
+                    ? "Live Forecast"
+                    : "Seasonal Model"}
                 </span>
               </div>
               <p className="text-sky-700 dark:text-sky-300 mt-0.5">
-                {weather.summary} Max Temp: {weather.temperatureC}°C | Precipitation: {weather.precipitationMm} mm
+                {weather.summary} Max Temp: {weather.temperatureC}°C |
+                Precipitation: {weather.precipitationMm} mm
               </p>
             </div>
           </div>
@@ -159,7 +172,9 @@ export function StressTestView({
           </div>
 
           <div className="my-3 flex items-baseline space-x-2">
-            <span className={`text-4xl font-extrabold ${getScoreColor(overallRiskScore)}`}>
+            <span
+              className={`text-4xl font-extrabold ${getScoreColor(overallRiskScore)}`}
+            >
               {overallRiskScore}
             </span>
             <span className="text-sm text-slate-400 font-semibold">/ 100</span>
@@ -173,8 +188,8 @@ export function StressTestView({
                 overallRiskScore <= 33
                   ? "bg-emerald-500"
                   : overallRiskScore <= 66
-                  ? "bg-amber-500"
-                  : "bg-rose-500"
+                    ? "bg-amber-500"
+                    : "bg-rose-500"
               }`}
             />
           </div>
@@ -230,19 +245,24 @@ export function StressTestView({
               {Math.abs(bufferAdequacy.deficitOrSurplus).toLocaleString()}
             </div>
             <span className="text-xs text-slate-600 dark:text-slate-400">
-              {bufferAdequacy.isSufficient ? "Surplus remaining after contingencies" : "Shortfall needed from external funds"}
+              {bufferAdequacy.isSufficient
+                ? "Surplus remaining after contingencies"
+                : "Shortfall needed from external funds"}
             </span>
           </div>
 
           <span className="text-[11px] text-slate-500">
-            Current buffer: {currency} {bufferAdequacy.currentBuffer.toLocaleString()}
+            Current buffer: {currency}{" "}
+            {bufferAdequacy.currentBuffer.toLocaleString()}
           </span>
         </div>
       </div>
 
       {/* Strategic Executive Summary */}
       <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm text-sm text-slate-700 dark:text-slate-300">
-        <strong className="text-slate-900 dark:text-white">Stress Test Evaluation: </strong>
+        <strong className="text-slate-900 dark:text-white">
+          Stress Test Evaluation:{" "}
+        </strong>
         {summary}
       </div>
 
@@ -276,7 +296,9 @@ export function StressTestView({
                   {item.estimatedExtraCost > 0 && (
                     <span className="flex items-center space-x-1 text-slate-900 dark:text-white font-bold">
                       <DollarSign className="w-3.5 h-3.5 text-blue-500" />
-                      <span>+{currency} {item.estimatedExtraCost.toLocaleString()}</span>
+                      <span>
+                        +{currency} {item.estimatedExtraCost.toLocaleString()}
+                      </span>
                     </span>
                   )}
                   {item.timelineImpactMin > 0 && (
@@ -290,14 +312,18 @@ export function StressTestView({
 
               {/* Contingency Plan */}
               <div className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900/60 p-2.5 rounded-lg border border-slate-200/60 dark:border-slate-700">
-                <strong className="text-blue-600 dark:text-blue-400">Pre-Built Backup: </strong>
+                <strong className="text-blue-600 dark:text-blue-400">
+                  Pre-Built Backup:{" "}
+                </strong>
                 {item.contingency}
               </div>
 
               {/* Formula Factors */}
               <div className="text-[11px] text-slate-400 flex flex-wrap gap-x-4">
                 <span>Exposure: {Math.round(item.exposure * 100)}%</span>
-                <span>Severity: {Math.round(item.scenarioSeverity * 100)}%</span>
+                <span>
+                  Severity: {Math.round(item.scenarioSeverity * 100)}%
+                </span>
                 <span>Mitigation: {Math.round(item.mitigation * 100)}%</span>
               </div>
             </div>

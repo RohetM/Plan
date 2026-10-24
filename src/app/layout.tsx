@@ -5,7 +5,14 @@ export const metadata: Metadata = {
   title: "Plan-B: Event Stress-Tester | Resilient Event Planning",
   description:
     "AI-powered event planner that builds your budget, timeline, and vendor checklist, then stress-tests against rain, vendor cancellations, guest surges, and budget cuts.",
-  keywords: ["event planner", "stress test", "contingency plan", "wedding planner", "risk scoring", "monte carlo"],
+  keywords: [
+    "event planner",
+    "stress test",
+    "contingency plan",
+    "wedding planner",
+    "risk scoring",
+    "monte carlo",
+  ],
 };
 
 export default function RootLayout({

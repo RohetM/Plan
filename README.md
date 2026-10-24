@@ -1,5 +1,6 @@
 # Plan-B: Event Stress-Tester
-> **PromptWars Challenge 5: Celebration & Event Planner** | *Version 1.0*
+
+> **PromptWars Challenge 5: Celebration & Event Planner** | _Version 1.0_
 
 [![Test Suite](https://img.shields.io/badge/tests-35%20passed-emerald?style=flat-square)](tests/)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
@@ -16,6 +17,7 @@ Most event planners produce a **happy-path plan**—assuming sun shines, vendors
 **Plan-B** is a GenAI-assisted, deterministic-first event planner that builds your budget, prep countdown, run-of-show timeline, and vendor checklists, then **stress-tests the plan against rain, critical vendor cancellations, guest count surges, and budget cuts**.
 
 Every plan ships with:
+
 - **Per-item quantitative risk scoring** ($0-100$ and Low/Medium/High bands)
 - **Mandatory contingency buffer line** ($\ge 8\%$) summing strictly to 100%
 - **Pre-engineered backup actions** with estimated extra recovery costs
@@ -27,6 +29,7 @@ Every plan ships with:
 ## 2. Core Architecture: The LLM Generates, Deterministic Code Decides
 
 To maximize reviewability, reliability, and security during judging:
+
 - **LLM Layer (Google Gemini Flash):** Synthesizes creative themes, personalized menus honoring complex dietary restrictions (Vegan, Gluten-Free, Halal, Kosher), accessibility provisions, and piercing vendor interview questions.
 - **Deterministic Layer (Tested TypeScript Engines):** All calculations—budget percentages, contingency buffer floor enforcement, quantitative risk scoring, Monte Carlo triangular distributions, and day-of timeline reflow—run in plain, unit-tested code.
 - **Offline / Zero-Key Fallback:** If `GEMINI_API_KEY` is absent or the API times out, the app immediately falls back to a deterministic template planner with pre-seeded personas.
@@ -35,7 +38,7 @@ To maximize reviewability, reliability, and security during judging:
 flowchart TD
     User([User / Event Host]) --> Intake[Event Intake Form]
     Intake --> API_Plan[POST /api/plan]
-    
+
     subgraph Deterministic Core
       Zod[Zod Schema Validation & Sanitizer]
       LLM[Gemini Flash / Retry / Fallback]
@@ -46,12 +49,12 @@ flowchart TD
     end
 
     API_Plan --> Zod --> LLM --> Budget
-    
+
     User --> StressView[Crisis Stress-Test Hub]
     StressView --> API_Stress[POST /api/stress]
     API_Stress --> Risk
     API_Stress --> MonteCarlo
-    
+
     User --> DayOfMode[Day-of Late Mode]
     DayOfMode --> API_Reflow[POST /api/reflow]
     API_Reflow --> Reflow
@@ -61,13 +64,13 @@ flowchart TD
 
 ## 3. Four Challenge Pillars + The Differentiator
 
-| Pillar | Implementation in Plan-B |
-| :--- | :--- |
-| **1. Budget Planner** | Categorized breakdown (Venue, Catering, Decor, AV, Photography, Misc, Buffer). Mandatory contingency buffer floor ($\ge 8\%$) guaranteed. Includes **What-If live reallocation sliders** and **1,000-trial Monte Carlo P50/P90 simulation**. |
-| **2. Interactive Timeline** | Dual-phase schedule: **Prep Countdown** (e.g. -60d, -30d, -14d) and **Day-Of Run-of-Show** (14:00, 15:30, 16:30...). Tracks task completion, flags hard curfews, and supports deterministic day-of delay reflow. |
-| **3. Vendor Checklist** | Per-category checklists with interactive status toggles (`to-contact`, `quoted`, `booked`), penetrating audit questions, contract red flags, and backup vendor recommendations. |
-| **4. Personalized Ideas** | Bespoke themes, decor styling, beverage and meal selections honoring entered dietary restrictions, activities accommodating accessibility needs, and sensory accommodations. |
-| **★ Differentiator: Crisis Stress-Test** | One-click simulation of 4 disasters: **Sudden Downpour**, **Vendor No-Show**, **+30% Guest Count Surge**, and **15% Budget Cut**. Outputs per-item risk scores, contingency cost estimates, and **Cross-Cutting Vulnerability Heatmap**. |
+| Pillar                                   | Implementation in Plan-B                                                                                                                                                                                                                     |
+| :--------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. Budget Planner**                    | Categorized breakdown (Venue, Catering, Decor, AV, Photography, Misc, Buffer). Mandatory contingency buffer floor ($\ge 8\%$) guaranteed. Includes **What-If live reallocation sliders** and **1,000-trial Monte Carlo P50/P90 simulation**. |
+| **2. Interactive Timeline**              | Dual-phase schedule: **Prep Countdown** (e.g. -60d, -30d, -14d) and **Day-Of Run-of-Show** (14:00, 15:30, 16:30...). Tracks task completion, flags hard curfews, and supports deterministic day-of delay reflow.                             |
+| **3. Vendor Checklist**                  | Per-category checklists with interactive status toggles (`to-contact`, `quoted`, `booked`), penetrating audit questions, contract red flags, and backup vendor recommendations.                                                              |
+| **4. Personalized Ideas**                | Bespoke themes, decor styling, beverage and meal selections honoring entered dietary restrictions, activities accommodating accessibility needs, and sensory accommodations.                                                                 |
+| **★ Differentiator: Crisis Stress-Test** | One-click simulation of 4 disasters: **Sudden Downpour**, **Vendor No-Show**, **+30% Guest Count Surge**, and **15% Budget Cut**. Outputs per-item risk scores, contingency cost estimates, and **Cross-Cutting Vulnerability Heatmap**.     |
 
 ---
 
@@ -90,6 +93,7 @@ Full details and mathematical tables available in [docs/RISK_MODEL.md](docs/RISK
 ## 5. Monte Carlo Budget Simulation
 
 Runs 1,000 independent trials using Inverse Transform Sampling on a triangular distribution:
+
 - **Min ($0.95\times$):** Reflects negotiated vendor discounts.
 - **Mode ($1.00\times$):** Estimated baseline quote.
 - **Max ($1.00 + \text{volatility}$):** Catering $+25\%$, Decor $+20\%$, Misc $+30\%$, Venue $+10\%$.
@@ -101,6 +105,7 @@ Runs 1,000 independent trials using Inverse Transform Sampling on a triangular d
 ## 6. Day-Of Mode: Running Late Recalibration
 
 When an event runs behind schedule:
+
 1. Tap **"Day-Of Mode"** and select a delay (e.g. `+25 minutes`).
 2. Downstream tasks shift forward deterministically.
 3. Hard cutoff constraints (e.g. Venue 23:00 curfew) are checked, and critical violations are flagged.
@@ -133,10 +138,12 @@ When an event runs behind schedule:
 ## 9. Quickstart & Installation
 
 ### Prerequisites
+
 - Node.js 18+ (tested on Node.js v24)
 - npm 9+
 
 ### Setup
+
 ```bash
 # 1. Clone repository
 git clone https://github.com/RohetM/Plan.git
@@ -158,6 +165,7 @@ npm run dev
 ```
 
 ### Production Build
+
 ```bash
 npm run build
 npm run start
@@ -168,11 +176,13 @@ npm run start
 ## 10. Test Suite Coverage
 
 Run the complete test suite:
+
 ```bash
 npm test
 ```
 
 **Results: 35 passing unit & integration tests:**
+
 - `tests/budget.test.ts`: Allocations sum to 100%, buffer floor enforced ($\ge 8\%$), what-if reallocation rebalancing.
 - `tests/risk.test.ts`: Boundary values (33/34, 66/67), outdoor exposure elevation, mitigation math, buffer adequacy.
 - `tests/monteCarlo.test.ts`: Seeded RNG reproducibility, triangular bounds, P90 $\ge$ P50, category volatility.
@@ -186,10 +196,10 @@ npm test
 
 1. **0:00 - 0:20 (The Hook):** "Most event planners only design for the happy path. But on the day, events fail on the unhappy path. Plan-B is an event stress-tester that builds your plan, then stress-tests it against disasters."
 2. **0:20 - 1:00 (The Baseline):** Click **"🌸 Priya (Wedding)"** preset. Walk through the 4 views:
-   - *Budget:* Show the 10% contingency buffer floor and visual allocation.
-   - *Timeline:* Show prep countdown items and day-of run-of-show.
-   - *Vendors:* Show interview questions, red flags, and backup options.
-   - *Ideas:* Show gluten-free/nut-free menu and wheelchair access provisions.
+   - _Budget:_ Show the 10% contingency buffer floor and visual allocation.
+   - _Timeline:_ Show prep countdown items and day-of run-of-show.
+   - _Vendors:_ Show interview questions, red flags, and backup options.
+   - _Ideas:_ Show gluten-free/nut-free menu and wheelchair access provisions.
 3. **1:00 - 2:00 (The Differentiator - Stress Test):**
    - Click **"Sudden Downpour"**. Watch the Risk Score and Buffer Adequacy gauge update in real-time.
    - Show the **Disaster Vulnerability Heatmap** and toggle to the **Accessible Table View**.

@@ -2,7 +2,14 @@
 
 import React, { useState } from "react";
 import { TimelineItem } from "@/lib/validation/schemas";
-import { Clock, Calendar, CheckSquare, Square, AlertOctagon, FastForward } from "lucide-react";
+import {
+  Clock,
+  Calendar,
+  CheckSquare,
+  Square,
+  AlertOctagon,
+  FastForward,
+} from "lucide-react";
 
 interface TimelineViewProps {
   timeline: TimelineItem[];
@@ -85,8 +92,8 @@ export function TimelineView({
                 item.completed
                   ? "bg-emerald-500 border-white dark:border-slate-900 ring-2 ring-emerald-300"
                   : item.isFixed
-                  ? "bg-rose-500 border-white dark:border-slate-900 ring-2 ring-rose-300"
-                  : "bg-blue-600 border-white dark:border-slate-900"
+                    ? "bg-rose-500 border-white dark:border-slate-900 ring-2 ring-rose-300"
+                    : "bg-blue-600 border-white dark:border-slate-900"
               }`}
             />
 
@@ -110,7 +117,12 @@ export function TimelineView({
                   {item.isFixed && (
                     <span className="flex items-center space-x-1 text-xs px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 font-semibold border border-rose-200 dark:border-rose-900">
                       <AlertOctagon className="w-3 h-3" />
-                      <span>Hard Cutoff {item.fixedCutoffTime ? `(${item.fixedCutoffTime})` : ""}</span>
+                      <span>
+                        Hard Cutoff{" "}
+                        {item.fixedCutoffTime
+                          ? `(${item.fixedCutoffTime})`
+                          : ""}
+                      </span>
                     </span>
                   )}
                 </div>

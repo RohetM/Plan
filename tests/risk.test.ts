@@ -75,7 +75,9 @@ describe("Risk Engine & Scenario Rules", () => {
       })),
     };
     const unmitigatedResult = evaluateStressTest(unmitigatedPlan, "rain");
-    const unmitigatedVenueRisk = unmitigatedResult.itemRisks.find((r) => r.category === "Venue");
+    const unmitigatedVenueRisk = unmitigatedResult.itemRisks.find(
+      (r) => r.category === "Venue"
+    );
 
     expect(unmitigatedVenueRisk!.score).toBeGreaterThan(venueRisk!.score);
     expect(unmitigatedVenueRisk!.score).toBeGreaterThan(50);
@@ -84,9 +86,11 @@ describe("Risk Engine & Scenario Rules", () => {
   it("simulates vendor no-show with critical impact on Catering & Bar", () => {
     const vendorResult = evaluateStressTest(plan, "vendor_noshow");
 
-    const cateringRisk = vendorResult.itemRisks.find((r) => r.category === "Catering & Bar");
+    const cateringRisk = vendorResult.itemRisks.find(
+      (r) => r.category === "Catering & Bar"
+    );
     expect(cateringRisk).toBeDefined();
-    expect(cateringRisk!.scenarioSeverity).toBeGreaterThanOrEqual(0.90);
+    expect(cateringRisk!.scenarioSeverity).toBeGreaterThanOrEqual(0.9);
     expect(vendorResult.contingencyActions.length).toBeGreaterThan(0);
   });
 
@@ -101,7 +105,12 @@ describe("Risk Engine & Scenario Rules", () => {
   });
 
   it("verifies all scenario rules are defined with valid numeric constants", () => {
-    const scenarios = ["rain", "vendor_noshow", "guest_surge", "budget_cut"] as const;
+    const scenarios = [
+      "rain",
+      "vendor_noshow",
+      "guest_surge",
+      "budget_cut",
+    ] as const;
 
     for (const sc of scenarios) {
       const rule = SCENARIO_RULES[sc];

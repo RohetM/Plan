@@ -120,7 +120,10 @@ export function ExportModal({ plan, stressResult, onClose }: ExportModalProps) {
         <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
           <div className="flex items-center space-x-2">
             <FileText className="w-5 h-5 text-blue-600" />
-            <h2 id="export-modal-title" className="text-xl font-bold text-slate-900 dark:text-white">
+            <h2
+              id="export-modal-title"
+              className="text-xl font-bold text-slate-900 dark:text-white"
+            >
               Export Resilience Blueprint
             </h2>
           </div>
@@ -136,7 +139,9 @@ export function ExportModal({ plan, stressResult, onClose }: ExportModalProps) {
         {/* Preview Container */}
         <div className="overflow-y-auto pr-2 space-y-4 pt-4 flex-1">
           <p className="text-xs text-slate-500">
-            Export your complete event plan including budget allocations, timeline, vendor checklists, accessibility provisions, and simulated crisis contingencies.
+            Export your complete event plan including budget allocations,
+            timeline, vendor checklists, accessibility provisions, and simulated
+            crisis contingencies.
           </p>
 
           <pre className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs font-mono text-slate-800 dark:text-slate-200 overflow-x-auto whitespace-pre-wrap max-h-72">

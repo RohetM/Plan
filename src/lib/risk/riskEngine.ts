@@ -21,7 +21,11 @@ export function calculateExposure(
 
   // Outdoor sensitivity
   if (locationType === "outdoor") {
-    if (category === "Venue" || category === "Decor & Rentals" || category === "Entertainment & AV") {
+    if (
+      category === "Venue" ||
+      category === "Decor & Rentals" ||
+      category === "Entertainment & AV"
+    ) {
       baseExposure += 0.35;
     }
   } else if (locationType === "hybrid") {
@@ -37,12 +41,12 @@ export function calculateExposure(
   if (budgetShare > 25) {
     baseExposure += 0.15;
   } else if (budgetShare < 8) {
-    baseExposure -= 0.10;
+    baseExposure -= 0.1;
   }
 
   // Lack of backup exposure
   if (!hasBackup) {
-    baseExposure += 0.10;
+    baseExposure += 0.1;
   }
 
   return Math.min(1.0, Math.max(0.1, Math.round(baseExposure * 100) / 100));
@@ -90,13 +94,20 @@ export function evaluateStressTest(
 
   for (const line of plan.budget) {
     const baseSev = rule.categorySeverities[line.category] ?? 0.5;
-    const effectiveSeverity = Math.min(1.0, Math.max(0.05, baseSev * locationMod));
+    const effectiveSeverity = Math.min(
+      1.0,
+      Math.max(0.05, baseSev * locationMod)
+    );
 
     // Determine vendor mitigation
     const matchingVendor = plan.vendors.find((v) =>
-      v.category.toLowerCase().includes(line.category.toLowerCase().split(" ")[0])
+      v.category
+        .toLowerCase()
+        .includes(line.category.toLowerCase().split(" ")[0])
     );
-    const hasBackup = Boolean(matchingVendor?.backupOption || matchingVendor?.backupNeeded === false);
+    const hasBackup = Boolean(
+      matchingVendor?.backupOption || matchingVendor?.backupNeeded === false
+    );
     const isBooked = matchingVendor?.status === "booked";
 
     const exposure = calculateExposure(
@@ -106,7 +117,11 @@ export function evaluateStressTest(
       hasBackup
     );
 
-    const mitigation = calculateMitigation(hasBackup, isBooked, currentBufferAmount > 0);
+    const mitigation = calculateMitigation(
+      hasBackup,
+      isBooked,
+      currentBufferAmount > 0
+    );
 
     // Core formula
     const rawScore = exposure * effectiveSeverity * (1 - mitigation) * 100;
@@ -122,7 +137,8 @@ export function evaluateStressTest(
 
     let itemExtraCost = 0;
     if (scenarioId !== "budget_cut") {
-      itemExtraCost = Math.round(line.amount * contingencyDef.costFactor * 100) / 100;
+      itemExtraCost =
+        Math.round(line.amount * contingencyDef.costFactor * 100) / 100;
       totalExtraCost += itemExtraCost;
     }
 
@@ -156,7 +172,8 @@ export function evaluateStressTest(
   const overallRiskBand = getRiskBand(overallRiskScore);
 
   const isSufficient = currentBufferAmount >= totalExtraCost;
-  const deficitOrSurplus = Math.round((currentBufferAmount - totalExtraCost) * 100) / 100;
+  const deficitOrSurplus =
+    Math.round((currentBufferAmount - totalExtraCost) * 100) / 100;
 
   // Extract actionable contingencies
   const contingencyActions = itemRisks

@@ -1,9 +1,11 @@
 # Plan-B Architecture & System Design
 
 ## 1. Core Architectural Principle
+
 **"The LLM generates; deterministic code decides."**
 
 Plan-B bridges generative AI creativity with mathematical certainty:
+
 - **Generative Layer:** Google Gemini drafts domain ideas, theme nuances, tailored menu suggestions honoring complex dietary restrictions, accessibility provisions, and penetrating vendor interview questions.
 - **Deterministic Layer:** All calculations—budget percentages, contingency buffer floor enforcement, quantitative risk scoring, Monte Carlo triangular distributions, and day-of timeline reflow—run in strictly tested, deterministic TypeScript engines.
 
@@ -13,7 +15,7 @@ Plan-B bridges generative AI creativity with mathematical certainty:
 flowchart TD
     User([User / Event Host]) --> Intake[Event Intake & Parameters]
     Intake --> API_Plan[POST /api/plan]
-    
+
     subgraph Core Engines
       Zod[Zod Schema Validation & Sanitizer]
       LLM[Gemini Flash / Structured JSON / Fallback]
@@ -26,12 +28,12 @@ flowchart TD
     API_Plan --> Zod
     Zod --> LLM
     LLM --> Budget
-    
+
     User --> StressView[Stress Test Hub]
     StressView --> API_Stress[POST /api/stress]
     API_Stress --> Risk
     API_Stress --> MonteCarlo
-    
+
     User --> DayOfMode[Day-of Late Mode]
     DayOfMode --> API_Reflow[POST /api/reflow]
     API_Reflow --> Reflow
@@ -95,6 +97,7 @@ plan-b/
 ```
 
 ## 4. Security & Prompt Injection Defense
+
 1. **Delimited Data Injection Protection:** User inputs are strictly sanitized and enclosed within `<EVENT_DATA>` tags.
 2. **Instruction Isolation:** Prompts explicitly command the model to ignore any instructions embedded within user input fields.
 3. **In-Memory Rate Limiting:** 60 requests per minute per IP token bucket.

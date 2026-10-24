@@ -39,7 +39,9 @@ export function reflowTimeline(
   delayedFromItemId: string,
   eventTitle: string = "Event"
 ): ReflowResponse {
-  const triggerIndex = timeline.findIndex((item) => item.id === delayedFromItemId);
+  const triggerIndex = timeline.findIndex(
+    (item) => item.id === delayedFromItemId
+  );
   const startIndex = triggerIndex >= 0 ? triggerIndex : 0;
 
   const adjustedTimeline: TimelineItem[] = [];
@@ -125,7 +127,10 @@ export function reflowTimeline(
   ];
 
   for (const role of vendorRoles) {
-    if (affectedCategories.has(role.category) || affectedCategories.size === 0) {
+    if (
+      affectedCategories.has(role.category) ||
+      affectedCategories.size === 0
+    ) {
       vendorDraftMessages.push({
         vendorCategory: role.category,
         urgency,

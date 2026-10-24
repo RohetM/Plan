@@ -2,7 +2,10 @@
 
 import React, { useState } from "react";
 import { BudgetLine, BudgetCategory } from "@/lib/validation/schemas";
-import { adjustCategoryPercent, generateBaselineBudget } from "@/lib/budget/budgetEngine";
+import {
+  adjustCategoryPercent,
+  generateBaselineBudget,
+} from "@/lib/budget/budgetEngine";
 import { ShieldCheck, Sliders, DollarSign, RotateCcw } from "lucide-react";
 
 interface BudgetViewProps {
@@ -20,7 +23,9 @@ export function BudgetView({
 }: BudgetViewProps) {
   const [sliderCategory, setSliderCategory] = useState<BudgetCategory>("Venue");
   const activeLine = budgetLines.find((l) => l.category === sliderCategory);
-  const [sliderValue, setSliderValue] = useState<number>(activeLine?.percent ?? 25);
+  const [sliderValue, setSliderValue] = useState<number>(
+    activeLine?.percent ?? 25
+  );
 
   const bufferLine = budgetLines.find((l) => l.isBuffer);
   const bufferPercent = bufferLine?.percent ?? 10;
@@ -28,7 +33,12 @@ export function BudgetView({
 
   const handleSliderChange = (newVal: number) => {
     setSliderValue(newVal);
-    const updated = adjustCategoryPercent(budgetLines, sliderCategory, newVal, totalBudget);
+    const updated = adjustCategoryPercent(
+      budgetLines,
+      sliderCategory,
+      newVal,
+      totalBudget
+    );
     onUpdateBudget(updated);
   };
 
@@ -72,13 +82,18 @@ export function BudgetView({
           <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
             {currency} {totalBudget.toLocaleString()}
           </div>
-          <span className="text-xs text-slate-500 mt-1 block">Allocated 100% across 7 lines</span>
+          <span className="text-xs text-slate-500 mt-1 block">
+            Allocated 100% across 7 lines
+          </span>
         </div>
 
         <div className="p-4 rounded-xl border border-rose-200 dark:border-rose-900/50 bg-rose-50/50 dark:bg-rose-950/20 shadow-sm">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-rose-800 dark:text-rose-300 uppercase tracking-wider flex items-center space-x-1">
-              <ShieldCheck className="w-4 h-4 text-rose-600" aria-hidden="true" />
+              <ShieldCheck
+                className="w-4 h-4 text-rose-600"
+                aria-hidden="true"
+              />
               <span>Contingency Buffer</span>
             </span>
             <span className="px-2 py-0.5 text-xs font-bold rounded-full bg-rose-200 dark:bg-rose-900 text-rose-800 dark:text-rose-200">
@@ -135,9 +150,14 @@ export function BudgetView({
         <div className="flex flex-wrap gap-x-4 gap-y-2 mt-3 text-xs">
           {budgetLines.map((line) => (
             <div key={line.id} className="flex items-center space-x-1.5">
-              <span className={`w-2.5 h-2.5 rounded-full ${getCategoryColor(line.category)}`} />
+              <span
+                className={`w-2.5 h-2.5 rounded-full ${getCategoryColor(line.category)}`}
+              />
               <span className="text-slate-600 dark:text-slate-400">
-                {line.category}: <strong className="text-slate-900 dark:text-white">{line.percent}%</strong>
+                {line.category}:{" "}
+                <strong className="text-slate-900 dark:text-white">
+                  {line.percent}%
+                </strong>
               </span>
             </div>
           ))}
@@ -167,7 +187,10 @@ export function BudgetView({
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-center">
           <div>
-            <label htmlFor="adjust-category-select" className="text-xs font-semibold text-slate-600 dark:text-slate-300 block mb-1">
+            <label
+              htmlFor="adjust-category-select"
+              className="text-xs font-semibold text-slate-600 dark:text-slate-300 block mb-1"
+            >
               Select Category to Adjust:
             </label>
             <select
@@ -191,8 +214,14 @@ export function BudgetView({
 
           <div className="sm:col-span-2">
             <div className="flex justify-between text-xs font-semibold mb-1">
-              <span className="text-slate-700 dark:text-slate-300">{sliderCategory} Share:</span>
-              <span className="text-blue-600 dark:text-blue-400">{sliderValue}% ({currency} {Math.round((sliderValue / 100) * totalBudget).toLocaleString()})</span>
+              <span className="text-slate-700 dark:text-slate-300">
+                {sliderCategory} Share:
+              </span>
+              <span className="text-blue-600 dark:text-blue-400">
+                {sliderValue}% ({currency}{" "}
+                {Math.round((sliderValue / 100) * totalBudget).toLocaleString()}
+                )
+              </span>
             </div>
             <input
               type="range"
@@ -210,23 +239,40 @@ export function BudgetView({
 
       {/* Itemized Budget Table */}
       <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
-        <table className="w-full text-left text-sm" aria-label="Itemized Event Budget Breakdown">
+        <table
+          className="w-full text-left text-sm"
+          aria-label="Itemized Event Budget Breakdown"
+        >
           <thead className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-xs text-slate-500 uppercase tracking-wider">
             <tr>
-              <th scope="col" className="px-4 py-3">Category</th>
-              <th scope="col" className="px-4 py-3 text-right">Share %</th>
-              <th scope="col" className="px-4 py-3 text-right">Amount</th>
-              <th scope="col" className="px-4 py-3">Resilience Notes & Scope</th>
+              <th scope="col" className="px-4 py-3">
+                Category
+              </th>
+              <th scope="col" className="px-4 py-3 text-right">
+                Share %
+              </th>
+              <th scope="col" className="px-4 py-3 text-right">
+                Amount
+              </th>
+              <th scope="col" className="px-4 py-3">
+                Resilience Notes & Scope
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {budgetLines.map((line) => (
               <tr
                 key={line.id}
-                className={line.isBuffer ? "bg-rose-50/30 dark:bg-rose-950/10 font-semibold" : "hover:bg-slate-50/50 dark:hover:bg-slate-800/40"}
+                className={
+                  line.isBuffer
+                    ? "bg-rose-50/30 dark:bg-rose-950/10 font-semibold"
+                    : "hover:bg-slate-50/50 dark:hover:bg-slate-800/40"
+                }
               >
                 <td className="px-4 py-3.5 flex items-center space-x-2">
-                  <span className={`w-2.5 h-2.5 rounded-full ${getCategoryColor(line.category)}`} />
+                  <span
+                    className={`w-2.5 h-2.5 rounded-full ${getCategoryColor(line.category)}`}
+                  />
                   <span className="font-medium text-slate-900 dark:text-white">
                     {line.category}
                   </span>

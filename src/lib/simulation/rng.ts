@@ -19,7 +19,12 @@ export function createSeededRng(seed: number = 42) {
  * @param b Max value
  * @param rand Uniform random number [0, 1)
  */
-export function sampleTriangular(a: number, c: number, b: number, rand: number): number {
+export function sampleTriangular(
+  a: number,
+  c: number,
+  b: number,
+  rand: number
+): number {
   if (b <= a) return a;
   const fc = (c - a) / (b - a);
   if (rand < fc) {

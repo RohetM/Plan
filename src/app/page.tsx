@@ -1,8 +1,18 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { FullPlan, ScenarioType, BudgetLine, TimelineItem, VendorStatus } from "@/lib/validation/schemas";
-import { SAMPLE_PERSONAS, generateDeterministicPlan } from "@/lib/llm/fallbackTemplates";
+import {
+  EventIntake,
+  FullPlan,
+  ScenarioType,
+  BudgetLine,
+  TimelineItem,
+  VendorStatus,
+} from "@/lib/validation/schemas";
+import {
+  SAMPLE_PERSONAS,
+  generateDeterministicPlan,
+} from "@/lib/llm/fallbackTemplates";
 import { evaluateStressTest } from "@/lib/risk/riskEngine";
 import { runMonteCarloBudgetSimulation } from "@/lib/simulation/monteCarlo";
 import { Header } from "@/components/Header";
@@ -16,7 +26,10 @@ import { RiskHeatmap } from "@/components/RiskHeatmap";
 import { MonteCarloCard } from "@/components/MonteCarloCard";
 import { DayOfReflowModal } from "@/components/DayOfReflowModal";
 import { ExportModal } from "@/components/ExportModal";
-import { fetchWeatherForecast, WeatherForecast } from "@/lib/weather/weatherClient";
+import {
+  fetchWeatherForecast,
+  WeatherForecast,
+} from "@/lib/weather/weatherClient";
 import {
   ShieldAlert,
   DollarSign,
@@ -61,17 +74,30 @@ export default function PlanBApp() {
 
   // Deterministically compute Heatmap matrix
   const heatmapData = useMemo(() => {
-    const allScenarios: ScenarioType[] = ["rain", "vendor_noshow", "guest_surge", "budget_cut"];
-    const scenarioRuns: Record<string, ReturnType<typeof evaluateStressTest>> = {};
+    const allScenarios: ScenarioType[] = [
+      "rain",
+      "vendor_noshow",
+      "guest_surge",
+      "budget_cut",
+    ];
+    const scenarioRuns: Record<
+      string,
+      ReturnType<typeof evaluateStressTest>
+    > = {};
 
     for (const sc of allScenarios) {
       scenarioRuns[sc] = evaluateStressTest(plan, sc);
     }
 
     return plan.budget.map((b) => {
-      const scenarioMap: Record<string, { score: number; band: string; extraCost: number }> = {};
+      const scenarioMap: Record<
+        string,
+        { score: number; band: string; extraCost: number }
+      > = {};
       for (const sc of allScenarios) {
-        const item = scenarioRuns[sc].itemRisks.find((r) => r.category === b.category);
+        const item = scenarioRuns[sc].itemRisks.find(
+          (r) => r.category === b.category
+        );
         scenarioMap[sc] = {
           score: item?.score ?? 0,
           band: item?.band ?? "Low",
@@ -87,8 +113,13 @@ export default function PlanBApp() {
 
   // Load weather when outdoor event is active
   useEffect(() => {
-    if (plan.intake.locationType === "outdoor" || plan.intake.locationType === "hybrid") {
-      fetchWeatherForecast().then(setWeather).catch(() => {});
+    if (
+      plan.intake.locationType === "outdoor" ||
+      plan.intake.locationType === "hybrid"
+    ) {
+      fetchWeatherForecast()
+        .then(setWeather)
+        .catch(() => {});
     }
   }, [plan.intake.locationType]);
 
@@ -116,7 +147,10 @@ export default function PlanBApp() {
     }));
   };
 
-  const handleUpdateVendorStatus = (vendorId: string, newStatus: VendorStatus) => {
+  const handleUpdateVendorStatus = (
+    vendorId: string,
+    newStatus: VendorStatus
+  ) => {
     setPlan((prev) => ({
       ...prev,
       vendors: prev.vendors.map((v) =>
@@ -131,7 +165,7 @@ export default function PlanBApp() {
     setStatusAnnouncement("Timeline shifted and vendor notices generated.");
   };
 
-  const handleIntakeSubmit = async (intakeData: any) => {
+  const handleIntakeSubmit = async (intakeData: EventIntake) => {
     setIsLoading(true);
     try {
       const res = await fetch("/api/plan", {
@@ -147,13 +181,17 @@ export default function PlanBApp() {
       const generatedPlan = await res.json();
       setPlan(generatedPlan);
       setIsIntakeOpen(false);
-      setStatusAnnouncement(`Plan generated successfully for ${intakeData.title}.`);
+      setStatusAnnouncement(
+        `Plan generated successfully for ${intakeData.title}.`
+      );
     } catch (err) {
       // Fallback
       const fallback = generateDeterministicPlan(intakeData);
       setPlan(fallback);
       setIsIntakeOpen(false);
-      setStatusAnnouncement("Plan generated using deterministic fallback engine.");
+      setStatusAnnouncement(
+        "Plan generated using deterministic fallback engine."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -183,9 +221,15 @@ export default function PlanBApp() {
       />
 
       {/* Main Content Area */}
-      <main id="main-content" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main
+        id="main-content"
+        className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6"
+      >
         {/* Event Quick Overview Bar */}
-        <section aria-label="Event Overview" className="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <section
+          aria-label="Event Overview"
+          className="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4"
+        >
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300">
@@ -221,13 +265,18 @@ export default function PlanBApp() {
             </div>
             <div className="flex items-center space-x-1.5 text-slate-600 dark:text-slate-400">
               <DollarSign className="w-4 h-4 text-slate-400" />
-              <span>{plan.intake.currency} {plan.intake.budget.toLocaleString()}</span>
+              <span>
+                {plan.intake.currency} {plan.intake.budget.toLocaleString()}
+              </span>
             </div>
           </div>
         </section>
 
         {/* Primary View Navigation Tabs */}
-        <nav aria-label="Plan Views" className="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto space-x-2 sm:space-x-4">
+        <nav
+          aria-label="Plan Views"
+          className="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto space-x-2 sm:space-x-4"
+        >
           <button
             onClick={() => setActiveTab("stress")}
             role="tab"
@@ -395,8 +444,13 @@ export default function PlanBApp() {
       {/* Footer */}
       <footer className="w-full border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500 bg-white dark:bg-slate-900 mt-12">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>Plan-B: Event Stress-Tester — PromptWars Challenge 5 Submission</span>
-          <span>Deterministic Core Engines &bull; WCAG 2.2 AA Compliant &bull; 100% Tested</span>
+          <span>
+            Plan-B: Event Stress-Tester — PromptWars Challenge 5 Submission
+          </span>
+          <span>
+            Deterministic Core Engines &bull; WCAG 2.2 AA Compliant &bull; 100%
+            Tested
+          </span>
         </div>
       </footer>
     </div>

@@ -2,7 +2,13 @@
 
 import React from "react";
 import { PersonalizedIdeas } from "@/lib/validation/schemas";
-import { Sparkles, Utensils, Palette, PartyPopper, HeartHandshake } from "lucide-react";
+import {
+  Sparkles,
+  Utensils,
+  Palette,
+  PartyPopper,
+  HeartHandshake,
+} from "lucide-react";
 
 interface IdeasViewProps {
   ideas: PersonalizedIdeas;
@@ -27,7 +33,8 @@ export function IdeasView({
           {ideas.theme}
         </h3>
         <p className="text-sm text-blue-100 max-w-2xl">
-          Personalized aesthetic, menu, and experiential blueprint tailored directly to your guest requirements and location.
+          Personalized aesthetic, menu, and experiential blueprint tailored
+          directly to your guest requirements and location.
         </p>
       </div>
 

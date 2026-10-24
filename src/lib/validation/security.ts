@@ -19,7 +19,10 @@ export function escapeHtml(str: string): string {
  * Detects and neutralizes common prompt-injection markers in user free-text inputs.
  * Ensures system delimiter isolation.
  */
-export function sanitizePromptInput(input: string, maxLength: number = 500): string {
+export function sanitizePromptInput(
+  input: string,
+  maxLength: number = 500
+): string {
   if (!input) return "";
 
   // 1. Truncate to maximum permissible length
@@ -51,7 +54,10 @@ const rateLimitMap = new Map<string, RateLimitRecord>();
 const CAPACITY = 60; // Max requests per window
 const REFILL_RATE_MS = 60_000; // 1 minute window
 
-export function checkRateLimit(clientIp: string): { allowed: boolean; remaining: number } {
+export function checkRateLimit(clientIp: string): {
+  allowed: boolean;
+  remaining: number;
+} {
   const now = Date.now();
   let record = rateLimitMap.get(clientIp);
 

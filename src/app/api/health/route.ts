@@ -11,7 +11,9 @@ export async function GET() {
         risk: "deterministic",
         monteCarlo: "deterministic",
         timelineReflow: "deterministic",
-        llm: process.env.GEMINI_API_KEY ? "gemini-1.5-flash (active)" : "deterministic-fallback (ready)",
+        llm: process.env.GEMINI_API_KEY
+          ? "gemini-1.5-flash (active)"
+          : "deterministic-fallback (ready)",
       },
     },
     {

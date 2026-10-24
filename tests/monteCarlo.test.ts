@@ -17,7 +17,7 @@ describe("Monte Carlo Simulation Engine", () => {
   it("triangular sampling stays strictly within bounds [a, b]", () => {
     const rng = createSeededRng(12345);
     const min = 0.95;
-    const mode = 1.00;
+    const mode = 1.0;
     const max = 1.25;
 
     for (let i = 0; i < 500; i++) {

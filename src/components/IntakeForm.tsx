@@ -56,13 +56,18 @@ export function IntakeForm({
     onSubmit(formData);
   };
 
-  const toggleArrayItem = (field: "dietary" | "accessibilityNeeds" | "vibe", item: string) => {
+  const toggleArrayItem = (
+    field: "dietary" | "accessibilityNeeds" | "vibe",
+    item: string
+  ) => {
     setFormData((prev) => {
       const current = prev[field];
       const exists = current.includes(item);
       return {
         ...prev,
-        [field]: exists ? current.filter((x) => x !== item) : [...current, item],
+        [field]: exists
+          ? current.filter((x) => x !== item)
+          : [...current, item],
       };
     });
   };
@@ -78,12 +83,16 @@ export function IntakeForm({
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
-            <h2 id="intake-form-title" className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <h2
+              id="intake-form-title"
+              className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center space-x-2"
+            >
               <span>Event Intake & Parameters</span>
               <Sparkles className="w-5 h-5 text-blue-500" aria-hidden="true" />
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-              Input your event specs. Plan-B builds the baseline and runs multi-scenario stress tests.
+              Input your event specs. Plan-B builds the baseline and runs
+              multi-scenario stress tests.
             </p>
           </div>
           <button
@@ -96,11 +105,17 @@ export function IntakeForm({
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="overflow-y-auto pr-2 space-y-6 pt-4 flex-1">
+        <form
+          onSubmit={handleSubmit}
+          className="overflow-y-auto pr-2 space-y-6 pt-4 flex-1"
+        >
           {/* Title & Type */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="sm:col-span-2">
-              <label htmlFor="event-title" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label
+                htmlFor="event-title"
+                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1"
+              >
                 Event Title *
               </label>
               <input
@@ -109,19 +124,29 @@ export function IntakeForm({
                 required
                 maxLength={100}
                 value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, title: e.target.value })
+                }
                 className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500"
                 placeholder="e.g. Maya & Julian's Outdoor Wedding"
               />
             </div>
             <div>
-              <label htmlFor="event-type" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label
+                htmlFor="event-type"
+                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1"
+              >
                 Event Type
               </label>
               <select
                 id="event-type"
                 value={formData.eventType}
-                onChange={(e) => setFormData({ ...formData, eventType: e.target.value as any })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    eventType: e.target.value as EventIntake["eventType"],
+                  })
+                }
                 className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
               >
                 <option value="wedding">Wedding</option>
@@ -139,7 +164,10 @@ export function IntakeForm({
           {/* Date, Location, Guest Count */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label htmlFor="event-date" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label
+                htmlFor="event-date"
+                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1"
+              >
                 Event Date *
               </label>
               <input
@@ -147,29 +175,46 @@ export function IntakeForm({
                 type="date"
                 required
                 value={formData.date}
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, date: e.target.value })
+                }
                 className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
               />
             </div>
 
             <div>
-              <label htmlFor="event-location" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label
+                htmlFor="event-location"
+                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1"
+              >
                 Location Architecture *
               </label>
               <select
                 id="event-location"
                 value={formData.locationType}
-                onChange={(e) => setFormData({ ...formData, locationType: e.target.value as any })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    locationType: e.target.value as EventIntake["locationType"],
+                  })
+                }
                 className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
               >
-                <option value="outdoor">Outdoor (High Weather Sensitivity)</option>
-                <option value="hybrid">Hybrid (Indoor + Outdoor Pavillion)</option>
+                <option value="outdoor">
+                  Outdoor (High Weather Sensitivity)
+                </option>
+                <option value="hybrid">
+                  Hybrid (Indoor + Outdoor Pavillion)
+                </option>
                 <option value="indoor">Indoor (Protected)</option>
               </select>
             </div>
 
             <div>
-              <label htmlFor="event-guests" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label
+                htmlFor="event-guests"
+                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1"
+              >
                 Expected Guests *
               </label>
               <input
@@ -179,7 +224,12 @@ export function IntakeForm({
                 max={50000}
                 required
                 value={formData.guestCount}
-                onChange={(e) => setFormData({ ...formData, guestCount: parseInt(e.target.value, 10) || 1 })}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    guestCount: parseInt(e.target.value, 10) || 1,
+                  })
+                }
                 className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
               />
             </div>
@@ -188,7 +238,10 @@ export function IntakeForm({
           {/* Budget & Currency */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="sm:col-span-2">
-              <label htmlFor="event-budget" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label
+                htmlFor="event-budget"
+                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1"
+              >
                 Total Budget Allocation *
               </label>
               <div className="relative">
@@ -199,7 +252,12 @@ export function IntakeForm({
                   max={10000000}
                   required
                   value={formData.budget}
-                  onChange={(e) => setFormData({ ...formData, budget: parseFloat(e.target.value) || 50 })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      budget: parseFloat(e.target.value) || 50,
+                    })
+                  }
                   className="w-full pl-3 pr-16 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
                 />
                 <span className="absolute right-3 top-2 text-xs font-bold text-slate-400">
@@ -207,18 +265,24 @@ export function IntakeForm({
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 mt-1">
-                Plan-B automatically provisions an enforced mandatory &ge;8% contingency buffer.
+                Plan-B automatically provisions an enforced mandatory &ge;8%
+                contingency buffer.
               </p>
             </div>
 
             <div>
-              <label htmlFor="event-currency" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+              <label
+                htmlFor="event-currency"
+                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1"
+              >
                 Currency
               </label>
               <select
                 id="event-currency"
                 value={formData.currency}
-                onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, currency: e.target.value })
+                }
                 className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
               >
                 <option value="USD">USD ($)</option>
@@ -311,7 +375,10 @@ export function IntakeForm({
 
           {/* Notes */}
           <div>
-            <label htmlFor="event-notes" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+            <label
+              htmlFor="event-notes"
+              className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1"
+            >
               Host Notes & Constraints (optional)
             </label>
             <textarea
@@ -319,7 +386,9 @@ export function IntakeForm({
               rows={2}
               maxLength={500}
               value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, notes: e.target.value })
+              }
               className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
               placeholder="e.g. Venue has a 10 PM sound curfew. Need space for a 4-piece live band."
             />

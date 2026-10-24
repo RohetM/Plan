@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { FullPlanSchema, ScenarioTypeEnum } from "@/lib/validation/schemas";
+import {
+  FullPlanSchema,
+  ScenarioTypeEnum,
+  StressTestResponse,
+  RiskResult,
+} from "@/lib/validation/schemas";
 import { evaluateStressTest } from "@/lib/risk/riskEngine";
 import { runMonteCarloBudgetSimulation } from "@/lib/simulation/monteCarlo";
 import { checkRateLimit } from "@/lib/validation/security";
@@ -27,7 +32,10 @@ export async function POST(req: NextRequest) {
 
     if (!parseResult.success) {
       return NextResponse.json(
-        { error: "Invalid stress request payload.", details: parseResult.error.format() },
+        {
+          error: "Invalid stress request payload.",
+          details: parseResult.error.format(),
+        },
         { status: 400 }
       );
     }
@@ -35,11 +43,19 @@ export async function POST(req: NextRequest) {
     const { plan, scenarioId } = parseResult.data;
 
     // Run Monte Carlo 1,000 trials simulation
-    const monteCarlo = runMonteCarloBudgetSimulation(plan.budget, plan.intake.budget);
+    const monteCarlo = runMonteCarloBudgetSimulation(
+      plan.budget,
+      plan.intake.budget
+    );
 
     if (scenarioId === "all") {
-      const allScenarios = ["rain", "vendor_noshow", "guest_surge", "budget_cut"] as const;
-      const results: Record<string, any> = {};
+      const allScenarios = [
+        "rain",
+        "vendor_noshow",
+        "guest_surge",
+        "budget_cut",
+      ] as const;
+      const results: Record<string, StressTestResponse> = {};
 
       for (const sc of allScenarios) {
         results[sc] = evaluateStressTest(plan, sc);
@@ -48,9 +64,14 @@ export async function POST(req: NextRequest) {
       // Build Heatmap Matrix (categories x scenarios)
       const categories = plan.budget.map((b) => b.category);
       const heatmap = categories.map((cat) => {
-        const scenarioScores: Record<string, { score: number; band: string; extraCost: number }> = {};
+        const scenarioScores: Record<
+          string,
+          { score: number; band: string; extraCost: number }
+        > = {};
         for (const sc of allScenarios) {
-          const itemRisk = results[sc].itemRisks.find((r: any) => r.category === cat);
+          const itemRisk = results[sc].itemRisks.find(
+            (r: RiskResult) => r.category === cat
+          );
           scenarioScores[sc] = {
             score: itemRisk?.score ?? 0,
             band: itemRisk?.band ?? "Low",
@@ -97,10 +118,15 @@ export async function POST(req: NextRequest) {
         },
       }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("API /api/stress error:", error);
+    const message =
+      error instanceof Error ? error.message : "Internal Server Error";
     return NextResponse.json(
-      { error: "Error occurred during stress simulation.", message: error.message },
+      {
+        error: "Error occurred during stress simulation.",
+        message,
+      },
       { status: 500 }
     );
   }

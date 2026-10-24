@@ -5,16 +5,18 @@ import { z } from "zod";
 // ==========================================
 
 export const EventIntakeSchema = z.object({
-  eventType: z.enum([
-    "wedding",
-    "birthday",
-    "festival",
-    "corporate",
-    "anniversary",
-    "community",
-    "dinner_party",
-    "other",
-  ]).default("wedding"),
+  eventType: z
+    .enum([
+      "wedding",
+      "birthday",
+      "festival",
+      "corporate",
+      "anniversary",
+      "community",
+      "dinner_party",
+      "other",
+    ])
+    .default("wedding"),
   title: z
     .string()
     .trim()
@@ -23,7 +25,9 @@ export const EventIntakeSchema = z.object({
   date: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD")
-    .default(() => new Date(Date.now() + 60 * 86400000).toISOString().split("T")[0]),
+    .default(
+      () => new Date(Date.now() + 60 * 86400000).toISOString().split("T")[0]
+    ),
   locationType: z.enum(["indoor", "outdoor", "hybrid"]).default("hybrid"),
   guestCount: z
     .number()
@@ -40,7 +44,12 @@ export const EventIntakeSchema = z.object({
   dietary: z.array(z.string().trim().max(50)).default([]),
   accessibilityNeeds: z.array(z.string().trim().max(80)).default([]),
   vibe: z.array(z.string().trim().max(40)).default([]),
-  notes: z.string().trim().max(500, "Notes cannot exceed 500 characters").optional().default(""),
+  notes: z
+    .string()
+    .trim()
+    .max(500, "Notes cannot exceed 500 characters")
+    .optional()
+    .default(""),
 });
 
 export type EventIntake = z.infer<typeof EventIntakeSchema>;

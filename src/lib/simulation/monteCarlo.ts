@@ -48,8 +48,8 @@ export function runMonteCarloBudgetSimulation(
       category: l.category,
       amount: l.amount,
       min: 0.95, // Vendors might discount 5%
-      mode: 1.00, // Most likely baseline
-      max: 1.00 + volatility, // Overrun potential
+      mode: 1.0, // Most likely baseline
+      max: 1.0 + volatility, // Overrun potential
       volatility,
     };
   });
@@ -78,9 +78,9 @@ export function runMonteCarloBudgetSimulation(
   totals.sort((a, b) => a - b);
 
   // Percentiles
-  const p10Index = Math.floor(trials * 0.10);
-  const p50Index = Math.floor(trials * 0.50);
-  const p90Index = Math.floor(trials * 0.90);
+  const p10Index = Math.floor(trials * 0.1);
+  const p50Index = Math.floor(trials * 0.5);
+  const p90Index = Math.floor(trials * 0.9);
   const p99Index = Math.min(trials - 1, Math.floor(trials * 0.99));
 
   const p10 = Math.round(totals[p10Index] * 100) / 100;
@@ -89,10 +89,14 @@ export function runMonteCarloBudgetSimulation(
   const p99 = Math.round(totals[p99Index] * 100) / 100;
 
   // Buffer needed to cover P90 cost
-  const recommendedBufferAmount = Math.max(0, Math.round((p90 - baselineCost) * 100) / 100);
-  const recommendedBufferPercent = totalBudget > 0
-    ? Math.round((recommendedBufferAmount / totalBudget) * 1000) / 10
-    : 10.0;
+  const recommendedBufferAmount = Math.max(
+    0,
+    Math.round((p90 - baselineCost) * 100) / 100
+  );
+  const recommendedBufferPercent =
+    totalBudget > 0
+      ? Math.round((recommendedBufferAmount / totalBudget) * 1000) / 10
+      : 10.0;
 
   const bufferIsAdequateForP90 = currentBufferAmount >= recommendedBufferAmount;
 

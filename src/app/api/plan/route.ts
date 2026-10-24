@@ -10,7 +10,10 @@ export async function POST(req: NextRequest) {
 
     if (!allowed) {
       return NextResponse.json(
-        { error: "Too many requests. Please wait a minute before generating another plan." },
+        {
+          error:
+            "Too many requests. Please wait a minute before generating another plan.",
+        },
         { status: 429, headers: { "X-RateLimit-Remaining": "0" } }
       );
     }
@@ -38,7 +41,7 @@ export async function POST(req: NextRequest) {
         "X-Frame-Options": "DENY",
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("API /api/plan error:", error);
     return NextResponse.json(
       { error: "Internal server error occurred while synthesizing plan." },

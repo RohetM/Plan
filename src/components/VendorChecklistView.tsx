@@ -2,7 +2,13 @@
 
 import React from "react";
 import { VendorItem, VendorStatus } from "@/lib/validation/schemas";
-import { HelpCircle, AlertTriangle, ShieldCheck, CheckCircle2, UserCheck } from "lucide-react";
+import {
+  HelpCircle,
+  AlertTriangle,
+  ShieldCheck,
+  CheckCircle2,
+  UserCheck,
+} from "lucide-react";
 
 interface VendorChecklistViewProps {
   vendors: VendorItem[];
@@ -29,7 +35,8 @@ export function VendorChecklistView({
             </span>
           </h3>
           <p className="text-xs text-slate-500">
-            Categorized contract checklists, critical audit interview questions, and non-negotiable red flags.
+            Categorized contract checklists, critical audit interview questions,
+            and non-negotiable red flags.
           </p>
         </div>
       </div>
@@ -53,30 +60,35 @@ export function VendorChecklistView({
                   </h4>
                   {vendor.estimatedCost > 0 && (
                     <span className="text-xs text-slate-500">
-                      Target Budget: <strong>{currency} {vendor.estimatedCost.toLocaleString()}</strong>
+                      Target Budget:{" "}
+                      <strong>
+                        {currency} {vendor.estimatedCost.toLocaleString()}
+                      </strong>
                     </span>
                   )}
                 </div>
 
                 {/* Status Switcher */}
                 <div className="flex items-center space-x-1 p-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-semibold">
-                  {(["to-contact", "quoted", "booked"] as VendorStatus[]).map((status) => (
-                    <button
-                      key={status}
-                      onClick={() => onUpdateVendorStatus(vendor.id, status)}
-                      className={`px-2 py-1 rounded-md capitalize transition ${
-                        vendor.status === status
-                          ? status === "booked"
-                            ? "bg-emerald-600 text-white shadow-sm"
-                            : status === "quoted"
-                            ? "bg-blue-600 text-white shadow-sm"
-                            : "bg-amber-500 text-white shadow-sm"
-                          : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
-                      }`}
-                    >
-                      {status.replace("-", " ")}
-                    </button>
-                  ))}
+                  {(["to-contact", "quoted", "booked"] as VendorStatus[]).map(
+                    (status) => (
+                      <button
+                        key={status}
+                        onClick={() => onUpdateVendorStatus(vendor.id, status)}
+                        className={`px-2 py-1 rounded-md capitalize transition ${
+                          vendor.status === status
+                            ? status === "booked"
+                              ? "bg-emerald-600 text-white shadow-sm"
+                              : status === "quoted"
+                                ? "bg-blue-600 text-white shadow-sm"
+                                : "bg-amber-500 text-white shadow-sm"
+                            : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+                        }`}
+                      >
+                        {status.replace("-", " ")}
+                      </button>
+                    )
+                  )}
                 </div>
               </div>
 
@@ -85,8 +97,13 @@ export function VendorChecklistView({
                 <div className="p-2.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 text-xs text-amber-800 dark:text-amber-300 flex items-start space-x-2">
                   <ShieldCheck className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
                   <div>
-                    <span className="font-bold">Backup Contingency Recommended: </span>
-                    <span>{vendor.backupOption || "Secure backup provider on standby"}</span>
+                    <span className="font-bold">
+                      Backup Contingency Recommended:{" "}
+                    </span>
+                    <span>
+                      {vendor.backupOption ||
+                        "Secure backup provider on standby"}
+                    </span>
                   </div>
                 </div>
               )}

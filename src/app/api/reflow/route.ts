@@ -17,12 +17,16 @@ export async function POST(req: NextRequest) {
 
     if (!parseResult.success) {
       return NextResponse.json(
-        { error: "Invalid reflow parameters.", details: parseResult.error.format() },
+        {
+          error: "Invalid reflow parameters.",
+          details: parseResult.error.format(),
+        },
         { status: 400 }
       );
     }
 
-    const { timeline, delayMinutes, delayedFromItemId, eventTitle } = parseResult.data;
+    const { timeline, delayMinutes, delayedFromItemId, eventTitle } =
+      parseResult.data;
 
     const reflowResponse = reflowTimeline(
       timeline,
@@ -37,7 +41,7 @@ export async function POST(req: NextRequest) {
         "X-Content-Type-Options": "nosniff",
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("API /api/reflow error:", error);
     return NextResponse.json(
       { error: "Failed to recalculate timeline reflow." },

@@ -3,7 +3,16 @@
 import React, { useState } from "react";
 import { TimelineItem, ReflowResponse } from "@/lib/validation/schemas";
 import { reflowTimeline } from "@/lib/timeline/reflowEngine";
-import { X, Clock, AlertTriangle, Copy, Check, MessageSquare, Mail, AlertOctagon } from "lucide-react";
+import {
+  X,
+  Clock,
+  AlertTriangle,
+  Copy,
+  Check,
+  MessageSquare,
+  Mail,
+  AlertOctagon,
+} from "lucide-react";
 
 interface DayOfReflowModalProps {
   timeline: TimelineItem[];
@@ -62,11 +71,15 @@ export function DayOfReflowModal({
               <Clock className="w-5 h-5" aria-hidden="true" />
             </div>
             <div>
-              <h2 id="reflow-modal-title" className="text-xl font-bold text-slate-900 dark:text-white">
+              <h2
+                id="reflow-modal-title"
+                className="text-xl font-bold text-slate-900 dark:text-white"
+              >
                 Day-Of Timeline Reflow & Emergency Vendor Comms
               </h2>
               <p className="text-xs text-slate-500">
-                Instantly recalibrate downstream schedule and copy emergency notices for vendors.
+                Instantly recalibrate downstream schedule and copy emergency
+                notices for vendors.
               </p>
             </div>
           </div>
@@ -108,7 +121,9 @@ export function DayOfReflowModal({
 
             <div className="space-y-1">
               <div className="flex justify-between text-xs font-semibold">
-                <span className="text-slate-600 dark:text-slate-400">Current Program Delay:</span>
+                <span className="text-slate-600 dark:text-slate-400">
+                  Current Program Delay:
+                </span>
                 <span className="text-amber-600 dark:text-amber-400 text-sm font-extrabold">
                   Running +{delayMinutes} Minutes Late
                 </span>
@@ -131,11 +146,17 @@ export function DayOfReflowModal({
             <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/60 space-y-2">
               <div className="flex items-center space-x-2 text-rose-800 dark:text-rose-300 text-xs font-bold uppercase tracking-wider">
                 <AlertOctagon className="w-4 h-4 text-rose-600" />
-                <span>Hard Cutoff Curfew Conflicts Detected ({reflowData.conflicts.length})</span>
+                <span>
+                  Hard Cutoff Curfew Conflicts Detected (
+                  {reflowData.conflicts.length})
+                </span>
               </div>
               <div className="space-y-1.5">
                 {reflowData.conflicts.map((conflict, idx) => (
-                  <div key={idx} className="text-xs text-rose-700 dark:text-rose-300 font-medium">
+                  <div
+                    key={idx}
+                    className="text-xs text-rose-700 dark:text-rose-300 font-medium"
+                  >
                     {conflict.message}
                   </div>
                 ))}
@@ -152,7 +173,10 @@ export function DayOfReflowModal({
               {reflowData.adjustedTimeline
                 .filter((item) => item.phase === "day-of")
                 .map((item) => (
-                  <div key={item.id} className="p-2.5 flex items-center justify-between">
+                  <div
+                    key={item.id}
+                    className="p-2.5 flex items-center justify-between"
+                  >
                     <div className="flex items-center space-x-2">
                       <span className="font-extrabold px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
                         {item.time}
@@ -161,7 +185,9 @@ export function DayOfReflowModal({
                         {item.label}
                       </span>
                     </div>
-                    <span className="text-slate-400">({item.durationMin}m)</span>
+                    <span className="text-slate-400">
+                      ({item.durationMin}m)
+                    </span>
                   </div>
                 ))}
             </div>
@@ -199,11 +225,17 @@ export function DayOfReflowModal({
                         ) : (
                           <MessageSquare className="w-3 h-3 text-blue-500" />
                         )}
-                        <span>{copiedKey === `sms-${idx}` ? "Copied SMS" : "Copy SMS"}</span>
+                        <span>
+                          {copiedKey === `sms-${idx}`
+                            ? "Copied SMS"
+                            : "Copy SMS"}
+                        </span>
                       </button>
 
                       <button
-                        onClick={() => handleCopy(msg.draftEmail, `email-${idx}`)}
+                        onClick={() =>
+                          handleCopy(msg.draftEmail, `email-${idx}`)
+                        }
                         className="flex items-center space-x-1 px-2 py-1 rounded bg-white dark:bg-slate-700 text-[11px] font-medium text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-600 hover:bg-slate-50 transition"
                       >
                         {copiedKey === `email-${idx}` ? (
@@ -211,7 +243,11 @@ export function DayOfReflowModal({
                         ) : (
                           <Mail className="w-3 h-3 text-indigo-500" />
                         )}
-                        <span>{copiedKey === `email-${idx}` ? "Copied Email" : "Copy Email"}</span>
+                        <span>
+                          {copiedKey === `email-${idx}`
+                            ? "Copied Email"
+                            : "Copy Email"}
+                        </span>
                       </button>
                     </div>
                   </div>

@@ -30,7 +30,7 @@ const config: Config = {
           low: "#10b981",
           medium: "#f59e0b",
           high: "#ef4444",
-        }
+        },
       },
     },
   },

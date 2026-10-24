@@ -56,9 +56,15 @@ OUTPUT STRUCTURE:
 export function buildPlanUserPrompt(intake: EventIntake): string {
   const sanitizedTitle = sanitizePromptInput(intake.title);
   const sanitizedNotes = sanitizePromptInput(intake.notes || "");
-  const sanitizedVibes = intake.vibe.map((v) => sanitizePromptInput(v)).join(", ");
-  const sanitizedDietary = intake.dietary.map((d) => sanitizePromptInput(d)).join(", ");
-  const sanitizedA11y = intake.accessibilityNeeds.map((a) => sanitizePromptInput(a)).join(", ");
+  const sanitizedVibes = intake.vibe
+    .map((v) => sanitizePromptInput(v))
+    .join(", ");
+  const sanitizedDietary = intake.dietary
+    .map((d) => sanitizePromptInput(d))
+    .join(", ");
+  const sanitizedA11y = intake.accessibilityNeeds
+    .map((a) => sanitizePromptInput(a))
+    .join(", ");
 
   return `Generate an event plan based on the following verified event parameters:
 

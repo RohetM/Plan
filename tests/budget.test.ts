@@ -39,7 +39,10 @@ describe("Budget Engine", () => {
 
   it("always sums percentages to exactly 100.0%", () => {
     const testCases = [
-      { budget: 5000, lines: [{ category: "Venue" as BudgetCategory, percent: 33.3 }] },
+      {
+        budget: 5000,
+        lines: [{ category: "Venue" as BudgetCategory, percent: 33.3 }],
+      },
       {
         budget: 15450,
         lines: [
@@ -67,7 +70,8 @@ describe("Budget Engine", () => {
     expect(Math.abs(sumAmounts - total)).toBeLessThanOrEqual(1);
 
     for (const line of result) {
-      const expectedAmount = Math.round(((line.percent / 100) * total) * 100) / 100;
+      const expectedAmount =
+        Math.round((line.percent / 100) * total * 100) / 100;
       expect(line.amount).toBe(expectedAmount);
     }
   });
@@ -77,7 +81,9 @@ describe("Budget Engine", () => {
     const adjusted = adjustCategoryPercent(baseline, "Venue", 45, 20000);
 
     const venueLine = adjusted.find((l) => l.category === "Venue");
-    const bufferLine = adjusted.find((l) => l.category === "Contingency Buffer");
+    const bufferLine = adjusted.find(
+      (l) => l.category === "Contingency Buffer"
+    );
     const sumPercent = adjusted.reduce((acc, curr) => acc + curr.percent, 0);
 
     expect(venueLine!.percent).toBe(45);

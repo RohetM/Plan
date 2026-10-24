@@ -70,7 +70,12 @@ describe("Timeline Reflow Engine", () => {
   ];
 
   it("shifts day-of items from the delayed item without touching prep items", () => {
-    const result = reflowTimeline(mockTimeline, 30, "day-2", "Golden Anniversary");
+    const result = reflowTimeline(
+      mockTimeline,
+      30,
+      "day-2",
+      "Golden Anniversary"
+    );
 
     // Prep item remains unchanged
     const prepItem = result.adjustedTimeline.find((i) => i.id === "prep-1");
@@ -93,7 +98,9 @@ describe("Timeline Reflow Engine", () => {
     const result = reflowTimeline(mockTimeline, 30, "day-2", "Summer Fest");
 
     expect(result.conflicts.length).toBeGreaterThan(0);
-    const curfewConflict = result.conflicts.find((c) => c.severity === "violation");
+    const curfewConflict = result.conflicts.find(
+      (c) => c.severity === "violation"
+    );
     expect(curfewConflict).toBeDefined();
     expect(curfewConflict?.fixedCutoffTime).toBe("22:00");
   });

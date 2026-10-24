@@ -1,7 +1,13 @@
 "use client";
 
 import React from "react";
-import { ShieldAlert, Clock, Download, Sparkles, RefreshCw } from "lucide-react";
+import {
+  ShieldAlert,
+  Clock,
+  Download,
+  Sparkles,
+  RefreshCw,
+} from "lucide-react";
 
 interface HeaderProps {
   onOpenIntake: () => void;

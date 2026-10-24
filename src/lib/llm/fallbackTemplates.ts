@@ -11,10 +11,17 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
   const budget = generateBaselineBudget(intake.budget);
 
   // Personalized ideas synthesized from intake
-  const dietaryStr = intake.dietary.length > 0 ? intake.dietary.join(", ") : "Universal Crowd-Pleasing";
-  const a11yStr = intake.accessibilityNeeds.length > 0 ? intake.accessibilityNeeds.join(", ") : "Step-free and sensory-friendly";
+  const dietaryStr =
+    intake.dietary.length > 0
+      ? intake.dietary.join(", ")
+      : "Universal Crowd-Pleasing";
+  const a11yStr =
+    intake.accessibilityNeeds.length > 0
+      ? intake.accessibilityNeeds.join(", ")
+      : "Step-free and sensory-friendly";
 
-  const isOutdoor = intake.locationType === "outdoor" || intake.locationType === "hybrid";
+  const isOutdoor =
+    intake.locationType === "outdoor" || intake.locationType === "hybrid";
 
   const ideas: PersonalizedIdeas = {
     theme: `${intake.vibe.length > 0 ? intake.vibe[0] : "Modern Elegance"} — ${intake.title}`,
@@ -76,7 +83,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       timeOffsetDays: -30,
       durationMin: 60,
       label: "Lock AV, Sound Equipment & Power Redundancy",
-      description: "Ensure backup generator or battery pack on site; verify outdoor microphone wind filters.",
+      description:
+        "Ensure backup generator or battery pack on site; verify outdoor microphone wind filters.",
       category: "Entertainment & AV",
       isFixed: false,
       dependsOn: [],
@@ -100,7 +108,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       timeOffsetDays: -2,
       durationMin: 60,
       label: "Emergency Protocol & Contingency Dry Run",
-      description: "Distribute vendor emergency contact card and review rain / delay procedures with core team.",
+      description:
+        "Distribute vendor emergency contact card and review rain / delay procedures with core team.",
       category: "General",
       isFixed: true,
       dependsOn: ["prep-4"],
@@ -114,7 +123,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       time: "14:00",
       durationMin: 90,
       label: "Vendor Load-In & Site Technical Setup",
-      description: "AV sound check, staging setup, floral installation, and catering prep stations active.",
+      description:
+        "AV sound check, staging setup, floral installation, and catering prep stations active.",
       category: "General",
       isFixed: false,
       dependsOn: [],
@@ -138,7 +148,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       time: "16:30",
       durationMin: 60,
       label: "Guest Arrival & Welcome Refreshment Service",
-      description: "Ambient background music, welcome signature drinks and passed appetizers.",
+      description:
+        "Ambient background music, welcome signature drinks and passed appetizers.",
       category: "Catering & Bar",
       isFixed: false,
       dependsOn: ["day-2"],
@@ -150,7 +161,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       time: "17:30",
       durationMin: 45,
       label: "Main Program / Ceremony Commences",
-      description: "Keynote program, vows, or celebration toasts. Microphone audio feeds recorded.",
+      description:
+        "Keynote program, vows, or celebration toasts. Microphone audio feeds recorded.",
       category: "Entertainment & AV",
       isFixed: true, // Fixed ceremony
       dependsOn: ["day-3"],
@@ -162,7 +174,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       time: "18:30",
       durationMin: 90,
       label: "Dinner & Main Dining Service",
-      description: "Plated or family-style meal served with dietary custom course pacing.",
+      description:
+        "Plated or family-style meal served with dietary custom course pacing.",
       category: "Catering & Bar",
       isFixed: false,
       dependsOn: ["day-4"],
@@ -174,7 +187,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       time: "20:00",
       durationMin: 120,
       label: "Evening Entertainment & Open Dance Floor",
-      description: "High-energy live music / DJ performance; dessert station and late-night snacks.",
+      description:
+        "High-energy live music / DJ performance; dessert station and late-night snacks.",
       category: "Entertainment & AV",
       isFixed: false,
       dependsOn: ["day-5"],
@@ -186,7 +200,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       time: "22:00",
       durationMin: 60,
       label: "Event Wind Down & Tear-Down",
-      description: "Music finishes promptly at noise curfew; vendor strike and guest departure.",
+      description:
+        "Music finishes promptly at noise curfew; vendor strike and guest departure.",
       category: "Venue",
       isFixed: true,
       fixedCutoffTime: "23:00", // Hard cutoff curfew
@@ -202,7 +217,7 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       category: "Venue",
       roleTitle: "Site Operations & Event Director",
       status: "booked",
-      estimatedCost: Math.round(intake.budget * 0.30),
+      estimatedCost: Math.round(intake.budget * 0.3),
       questions: [
         "What is the exact backup indoor room capacity if severe weather forces an outdoor evacuation?",
         "What is the strict municipal noise curfew cutoff and fee for load-out overtime?",
@@ -214,7 +229,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
         "Vague security deposit forfeiture terms for minor floor scuffs.",
       ],
       backupNeeded: false,
-      backupOption: "Municipal cultural hall hold with 72-hr cancellation option",
+      backupOption:
+        "Municipal cultural hall hold with 72-hr cancellation option",
       notes: "Deposit paid. Certificate of insurance filed.",
     },
     {
@@ -222,7 +238,7 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       category: "Catering & Bar",
       roleTitle: "Executive Event Caterer & Beverage Lead",
       status: "quoted",
-      estimatedCost: Math.round(intake.budget * 0.30),
+      estimatedCost: Math.round(intake.budget * 0.3),
       questions: [
         `How do you guarantee strict cross-contamination barriers for ${dietaryStr}?`,
         "What is your grace period for the final headcount guarantee before raw ingredients are purchased?",
@@ -234,7 +250,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
         "Staffing ratio worse than 1 server per 20 guests for plated meals.",
       ],
       backupNeeded: true,
-      backupOption: "Local gourmet food truck collective on standby with 24-hr mobilization notice",
+      backupOption:
+        "Local gourmet food truck collective on standby with 24-hr mobilization notice",
       notes: "Tasting scheduled. Awaiting final itemized quotation.",
     },
     {
@@ -242,7 +259,7 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       category: "Entertainment & AV",
       roleTitle: "Lead DJ / MC & Sound Technician",
       status: "to-contact",
-      estimatedCost: Math.round(intake.budget * 0.10),
+      estimatedCost: Math.round(intake.budget * 0.1),
       questions: [
         "Do you provide battery-powered backup amplification and redundant wireless microphones?",
         "What is your replacement policy if the designated lead performer falls ill?",
@@ -254,7 +271,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
         "Refusal to play or respect strict 'do-not-play' track lists.",
       ],
       backupNeeded: true,
-      backupOption: "Pre-loaded iPad Pro with offline high-res Spotify playlists and portable PA rental",
+      backupOption:
+        "Pre-loaded iPad Pro with offline high-res Spotify playlists and portable PA rental",
       notes: "Reviewing audio reels and references.",
     },
     {
@@ -262,7 +280,7 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
       category: "Photography & Media",
       roleTitle: "Documentary Lead Photographer & Assistant",
       status: "to-contact",
-      estimatedCost: Math.round(intake.budget * 0.10),
+      estimatedCost: Math.round(intake.budget * 0.1),
       questions: [
         "Do your cameras write to dual memory card slots simultaneously for instant real-time backup?",
         "What is your exact turnaround timeline for sneak-peeks and full edited gallery delivery?",
@@ -274,7 +292,8 @@ export function generateDeterministicPlan(intake: EventIntake): FullPlan {
         "Demands full copyright transfer withholding without commercial reproduction license.",
       ],
       backupNeeded: true,
-      backupOption: "Second shooter from local creative guild booked with on-call retainer",
+      backupOption:
+        "Second shooter from local creative guild booked with on-call retainer",
       notes: "Portfolio matches the aesthetic vibe.",
     },
     {
@@ -324,9 +343,13 @@ export const SAMPLE_PERSONAS: Record<string, EventIntake> = {
     budget: 25000,
     currency: "USD",
     dietary: ["Vegetarian", "Gluten-Free", "Nut-Free"],
-    accessibilityNeeds: ["Wheelchair Ramp Access", "Reserved Front-Row Seating"],
+    accessibilityNeeds: [
+      "Wheelchair Ramp Access",
+      "Reserved Front-Row Seating",
+    ],
     vibe: ["Romantic", "Botanical", "Warm", "Celebratory"],
-    notes: "Outdoor botanical garden ceremony with dinner pavilion. Weather resilience is paramount.",
+    notes:
+      "Outdoor botanical garden ceremony with dinner pavilion. Weather resilience is paramount.",
   },
   marcus_festival: {
     eventType: "festival",
@@ -337,9 +360,14 @@ export const SAMPLE_PERSONAS: Record<string, EventIntake> = {
     budget: 12000,
     currency: "USD",
     dietary: ["Vegan", "Halal"],
-    accessibilityNeeds: ["ASL Interpreter", "Quiet Sensory Chill Zone", "Step-Free Bathrooms"],
+    accessibilityNeeds: [
+      "ASL Interpreter",
+      "Quiet Sensory Chill Zone",
+      "Step-Free Bathrooms",
+    ],
     vibe: ["High-Energy", "Eclectic", "Community-Driven", "Creative"],
-    notes: "Volunteer-operated municipal park festival with craft stalls and live acoustic stage.",
+    notes:
+      "Volunteer-operated municipal park festival with craft stalls and live acoustic stage.",
   },
   aisha_birthday: {
     eventType: "birthday",
@@ -352,6 +380,7 @@ export const SAMPLE_PERSONAS: Record<string, EventIntake> = {
     dietary: ["Dairy-Free", "Pescatarian"],
     accessibilityNeeds: ["Elevator Access", "Subdued Acoustic Levels"],
     vibe: ["Intimate", "Modern Luxe", "Sophisticated"],
-    notes: "Rooftop glasshouse lounge party with curated wine pairings and jazz trio.",
+    notes:
+      "Rooftop glasshouse lounge party with curated wine pairings and jazz trio.",
   },
 };

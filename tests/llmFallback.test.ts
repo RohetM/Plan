@@ -55,7 +55,7 @@ describe("LLM Fallback & Persona Generator", () => {
       const plan = generateDeterministicPlan(intake);
       expect(plan.budget.length).toBe(7);
       expect(plan.vendors.length).toBeGreaterThanOrEqual(4);
-      expect(plan.title || plan.intake.title).toBeTruthy();
+      expect(plan.intake.title).toBeTruthy();
     }
   });
 });

@@ -59,7 +59,8 @@ export function RiskHeatmap({
             </span>
           </h3>
           <p className="text-xs text-slate-500">
-            Multi-factor stress test: exposure &times; severity &times; (1 - mitigation). Click any column to drill in.
+            Multi-factor stress test: exposure &times; severity &times; (1 -
+            mitigation). Click any column to drill in.
           </p>
         </div>
 
@@ -98,7 +99,10 @@ export function RiskHeatmap({
           <table className="w-full text-left text-xs border-collapse">
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-500">
-                <th scope="col" className="py-2.5 px-3 font-bold text-slate-700 dark:text-slate-300">
+                <th
+                  scope="col"
+                  className="py-2.5 px-3 font-bold text-slate-700 dark:text-slate-300"
+                >
                   Category
                 </th>
                 {SCENARIOS.map((sc) => (
@@ -119,18 +123,27 @@ export function RiskHeatmap({
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {heatmapData.map((row) => (
-                <tr key={row.category} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30">
+                <tr
+                  key={row.category}
+                  className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30"
+                >
                   <td className="py-3 px-3 font-semibold text-slate-900 dark:text-white">
                     {row.category}
                   </td>
                   {SCENARIOS.map((sc) => {
-                    const cell = row.scenarios[sc.id] || { score: 0, band: "Low", extraCost: 0 };
+                    const cell = row.scenarios[sc.id] || {
+                      score: 0,
+                      band: "Low",
+                      extraCost: 0,
+                    };
                     return (
                       <td
                         key={sc.id}
                         onClick={() => onSelectScenario(sc.id)}
                         className={`py-3 px-3 text-center cursor-pointer ${
-                          activeScenario === sc.id ? "bg-blue-50/30 dark:bg-blue-950/20" : ""
+                          activeScenario === sc.id
+                            ? "bg-blue-50/30 dark:bg-blue-950/20"
+                            : ""
                         }`}
                       >
                         <div
@@ -152,37 +165,63 @@ export function RiskHeatmap({
       ) : (
         /* Accessible Table Alternative (WCAG 2.2 AA) */
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs" aria-label="Risk Heatmap Data Alternative">
+          <table
+            className="w-full text-left text-xs"
+            aria-label="Risk Heatmap Data Alternative"
+          >
             <caption className="text-left text-slate-500 mb-2 italic">
-              Quantitative risk breakdown across scenarios and budget categories with calculated extra contingency costs.
+              Quantitative risk breakdown across scenarios and budget categories
+              with calculated extra contingency costs.
             </caption>
             <thead className="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800">
               <tr>
-                <th scope="col" className="py-2.5 px-3">Budget Category</th>
-                <th scope="col" className="py-2.5 px-3">Scenario</th>
-                <th scope="col" className="py-2.5 px-3 text-center">Risk Score (0-100)</th>
-                <th scope="col" className="py-2.5 px-3 text-center">Risk Band</th>
-                <th scope="col" className="py-2.5 px-3 text-right">Estimated Extra Cost</th>
+                <th scope="col" className="py-2.5 px-3">
+                  Budget Category
+                </th>
+                <th scope="col" className="py-2.5 px-3">
+                  Scenario
+                </th>
+                <th scope="col" className="py-2.5 px-3 text-center">
+                  Risk Score (0-100)
+                </th>
+                <th scope="col" className="py-2.5 px-3 text-center">
+                  Risk Band
+                </th>
+                <th scope="col" className="py-2.5 px-3 text-right">
+                  Estimated Extra Cost
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {heatmapData.flatMap((row) =>
                 SCENARIOS.map((sc) => {
-                  const cell = row.scenarios[sc.id] || { score: 0, band: "Low", extraCost: 0 };
+                  const cell = row.scenarios[sc.id] || {
+                    score: 0,
+                    band: "Low",
+                    extraCost: 0,
+                  };
                   return (
                     <tr key={`${row.category}-${sc.id}`}>
                       <td className="py-2 px-3 font-semibold text-slate-800 dark:text-slate-200">
                         {row.category}
                       </td>
-                      <td className="py-2 px-3 text-slate-600 dark:text-slate-400">{sc.label}</td>
-                      <td className="py-2 px-3 text-center font-bold">{cell.score}</td>
+                      <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
+                        {sc.label}
+                      </td>
+                      <td className="py-2 px-3 text-center font-bold">
+                        {cell.score}
+                      </td>
                       <td className="py-2 px-3 text-center">
-                        <span className={`px-2 py-0.5 rounded text-[11px] font-semibold ${getCellBadgeClass(cell.score)}`}>
+                        <span
+                          className={`px-2 py-0.5 rounded text-[11px] font-semibold ${getCellBadgeClass(cell.score)}`}
+                        >
                           {cell.band}
                         </span>
                       </td>
                       <td className="py-2 px-3 text-right font-medium">
-                        {cell.extraCost > 0 ? `${currency} ${cell.extraCost.toLocaleString()}` : "—"}
+                        {cell.extraCost > 0
+                          ? `${currency} ${cell.extraCost.toLocaleString()}`
+                          : "—"}
                       </td>
                     </tr>
                   );

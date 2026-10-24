@@ -59,7 +59,8 @@ export async function fetchWeatherForecast(
       rainProbabilityPercent: 30, // Standard baseline planning assumption
       precipitationMm: 1.5,
       temperatureC: 21,
-      summary: "Simulated seasonal weather forecast: 30% precipitation probability assumed.",
+      summary:
+        "Simulated seasonal weather forecast: 30% precipitation probability assumed.",
       source: "seasonal_fallback",
     };
   }
