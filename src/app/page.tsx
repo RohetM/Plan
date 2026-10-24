@@ -296,87 +296,105 @@ export default function PlanBApp() {
         </section>
 
         {/* Primary View Navigation Tabs */}
-        <nav
-          aria-label="Plan Views"
-          className="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto space-x-2 sm:space-x-4"
-        >
-          <button
-            onClick={() => setActiveTab("stress")}
-            role="tab"
-            aria-selected={activeTab === "stress"}
-            className={`flex items-center space-x-2 py-3 px-3 text-sm font-bold border-b-2 transition shrink-0 ${
-              activeTab === "stress"
-                ? "border-rose-600 text-rose-600 dark:text-rose-400"
-                : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900"
-            }`}
+        <nav aria-label="Plan Views">
+          <div
+            role="tablist"
+            aria-label="Plan Sections"
+            className="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto space-x-2 sm:space-x-4"
           >
-            <ShieldAlert className="w-4 h-4" />
-            <span>Crisis Stress-Test</span>
-            <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300">
-              Differentiator
-            </span>
-          </button>
+            <button
+              id="tab-stress"
+              aria-controls="panel-stress"
+              onClick={() => setActiveTab("stress")}
+              role="tab"
+              aria-selected={activeTab === "stress"}
+              className={`flex items-center space-x-2 py-3 px-3 text-sm font-bold border-b-2 transition shrink-0 ${
+                activeTab === "stress"
+                  ? "border-rose-700 text-rose-700 dark:border-rose-400 dark:text-rose-400"
+                  : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900"
+              }`}
+            >
+              <ShieldAlert className="w-4 h-4" />
+              <span>Crisis Stress-Test</span>
+              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300">
+                Differentiator
+              </span>
+            </button>
 
-          <button
-            onClick={() => setActiveTab("budget")}
-            role="tab"
-            aria-selected={activeTab === "budget"}
-            className={`flex items-center space-x-2 py-3 px-3 text-sm font-semibold border-b-2 transition shrink-0 ${
-              activeTab === "budget"
-                ? "border-blue-600 text-blue-600 dark:text-blue-400"
-                : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900"
-            }`}
-          >
-            <DollarSign className="w-4 h-4" />
-            <span>Budget & Buffer</span>
-          </button>
+            <button
+              id="tab-budget"
+              aria-controls="panel-budget"
+              onClick={() => setActiveTab("budget")}
+              role="tab"
+              aria-selected={activeTab === "budget"}
+              className={`flex items-center space-x-2 py-3 px-3 text-sm font-semibold border-b-2 transition shrink-0 ${
+                activeTab === "budget"
+                  ? "border-blue-600 text-blue-600 dark:text-blue-400"
+                  : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900"
+              }`}
+            >
+              <DollarSign className="w-4 h-4" />
+              <span>Budget & Buffer</span>
+            </button>
 
-          <button
-            onClick={() => setActiveTab("timeline")}
-            role="tab"
-            aria-selected={activeTab === "timeline"}
-            className={`flex items-center space-x-2 py-3 px-3 text-sm font-semibold border-b-2 transition shrink-0 ${
-              activeTab === "timeline"
-                ? "border-blue-600 text-blue-600 dark:text-blue-400"
-                : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900"
-            }`}
-          >
-            <Clock className="w-4 h-4" />
-            <span>Timeline & Run-of-Show</span>
-          </button>
+            <button
+              id="tab-timeline"
+              aria-controls="panel-timeline"
+              onClick={() => setActiveTab("timeline")}
+              role="tab"
+              aria-selected={activeTab === "timeline"}
+              className={`flex items-center space-x-2 py-3 px-3 text-sm font-semibold border-b-2 transition shrink-0 ${
+                activeTab === "timeline"
+                  ? "border-blue-600 text-blue-600 dark:text-blue-400"
+                  : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900"
+              }`}
+            >
+              <Clock className="w-4 h-4" />
+              <span>Timeline & Run-of-Show</span>
+            </button>
 
-          <button
-            onClick={() => setActiveTab("vendors")}
-            role="tab"
-            aria-selected={activeTab === "vendors"}
-            className={`flex items-center space-x-2 py-3 px-3 text-sm font-semibold border-b-2 transition shrink-0 ${
-              activeTab === "vendors"
-                ? "border-blue-600 text-blue-600 dark:text-blue-400"
-                : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900"
-            }`}
-          >
-            <CheckCircle2 className="w-4 h-4" />
-            <span>Vendor Checklist</span>
-          </button>
+            <button
+              id="tab-vendors"
+              aria-controls="panel-vendors"
+              onClick={() => setActiveTab("vendors")}
+              role="tab"
+              aria-selected={activeTab === "vendors"}
+              className={`flex items-center space-x-2 py-3 px-3 text-sm font-semibold border-b-2 transition shrink-0 ${
+                activeTab === "vendors"
+                  ? "border-blue-600 text-blue-600 dark:text-blue-400"
+                  : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900"
+              }`}
+            >
+              <CheckCircle2 className="w-4 h-4" />
+              <span>Vendor Checklist</span>
+            </button>
 
-          <button
-            onClick={() => setActiveTab("ideas")}
-            role="tab"
-            aria-selected={activeTab === "ideas"}
-            className={`flex items-center space-x-2 py-3 px-3 text-sm font-semibold border-b-2 transition shrink-0 ${
-              activeTab === "ideas"
-                ? "border-blue-600 text-blue-600 dark:text-blue-400"
-                : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900"
-            }`}
-          >
-            <Sparkles className="w-4 h-4" />
-            <span>Personalized Ideas</span>
-          </button>
+            <button
+              id="tab-ideas"
+              aria-controls="panel-ideas"
+              onClick={() => setActiveTab("ideas")}
+              role="tab"
+              aria-selected={activeTab === "ideas"}
+              className={`flex items-center space-x-2 py-3 px-3 text-sm font-semibold border-b-2 transition shrink-0 ${
+                activeTab === "ideas"
+                  ? "border-blue-600 text-blue-600 dark:text-blue-400"
+                  : "border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900"
+              }`}
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Personalized Ideas</span>
+            </button>
+          </div>
         </nav>
 
         {/* Tab Content Panels */}
         {activeTab === "stress" && (
-          <div className="space-y-6">
+          <div
+            role="tabpanel"
+            id="panel-stress"
+            aria-labelledby="tab-stress"
+            className="space-y-6"
+          >
             <StressTestView
               stressResult={currentStressResult}
               activeScenario={activeScenario}
@@ -396,7 +414,12 @@ export default function PlanBApp() {
         )}
 
         {activeTab === "budget" && (
-          <div className="space-y-6">
+          <div
+            role="tabpanel"
+            id="panel-budget"
+            aria-labelledby="tab-budget"
+            className="space-y-6"
+          >
             <BudgetView
               budgetLines={plan.budget}
               totalBudget={plan.intake.budget}
@@ -413,27 +436,45 @@ export default function PlanBApp() {
         )}
 
         {activeTab === "timeline" && (
-          <TimelineView
-            timeline={plan.timeline}
-            onToggleComplete={handleToggleTimelineComplete}
-            onOpenDayOfModal={() => setIsDayOfOpen(true)}
-          />
+          <div
+            role="tabpanel"
+            id="panel-timeline"
+            aria-labelledby="tab-timeline"
+          >
+            <TimelineView
+              timeline={plan.timeline}
+              onToggleComplete={handleToggleTimelineComplete}
+              onOpenDayOfModal={() => setIsDayOfOpen(true)}
+            />
+          </div>
         )}
 
         {activeTab === "vendors" && (
-          <VendorChecklistView
-            vendors={plan.vendors}
-            currency={plan.intake.currency}
-            onUpdateVendorStatus={handleUpdateVendorStatus}
-          />
+          <div
+            role="tabpanel"
+            id="panel-vendors"
+            aria-labelledby="tab-vendors"
+          >
+            <VendorChecklistView
+              vendors={plan.vendors}
+              currency={plan.intake.currency}
+              onUpdateVendorStatus={handleUpdateVendorStatus}
+            />
+          </div>
         )}
 
         {activeTab === "ideas" && (
-          <IdeasView
-            ideas={plan.ideas}
-            dietaryRestrictions={plan.intake.dietary}
-            accessibilityNeeds={plan.intake.accessibilityNeeds}
-          />
+          <div
+            role="tabpanel"
+            id="panel-ideas"
+            aria-labelledby="tab-ideas"
+          >
+            <IdeasView
+              ideas={plan.ideas}
+              dietaryRestrictions={plan.intake.dietary}
+              accessibilityNeeds={plan.intake.accessibilityNeeds}
+            />
+          </div>
         )}
       </main>
 

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { EventIntake } from "@/lib/validation/schemas";
 import { X, Sparkles, AlertCircle } from "lucide-react";
+import { useModalFocus } from "@/lib/a11y/useModalFocus";
 
 interface IntakeFormProps {
   initialValues: EventIntake;
@@ -47,12 +48,35 @@ export function IntakeForm({
   onClose,
   isLoading,
 }: IntakeFormProps) {
+  const modalRef = useModalFocus(true, onClose);
   const [formData, setFormData] = useState<EventIntake>({ ...initialValues });
+  const [formErrors, setFormErrors] = useState<{
+    title?: string;
+    guestCount?: string;
+    budget?: string;
+  }>({});
   const [customDiet, setCustomDiet] = useState("");
   const [customA11y, setCustomA11y] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const errors: { title?: string; guestCount?: string; budget?: string } = {};
+    if (!formData.title.trim()) {
+      errors.title = "Event title is required.";
+    }
+    if (formData.guestCount < 1 || formData.guestCount > 50000) {
+      errors.guestCount = "Guest count must be between 1 and 50,000.";
+    }
+    if (formData.budget < 50) {
+      errors.budget = `Minimum budget is 50 ${formData.currency}.`;
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return;
+    }
+
+    setFormErrors({});
     onSubmit(formData);
   };
 
@@ -79,7 +103,10 @@ export function IntakeForm({
       aria-labelledby="intake-form-title"
       className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
     >
-      <div className="relative w-full max-w-2xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 overflow-hidden max-h-[90vh] flex flex-col">
+      <div
+        ref={modalRef}
+        className="relative w-full max-w-2xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 overflow-hidden max-h-[90vh] flex flex-col"
+      >
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
@@ -127,9 +154,24 @@ export function IntakeForm({
                 onChange={(e) =>
                   setFormData({ ...formData, title: e.target.value })
                 }
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                aria-invalid={!!formErrors.title}
+                aria-describedby={formErrors.title ? "title-error" : undefined}
+                className={`w-full px-3 py-2 text-sm rounded-lg border ${
+                  formErrors.title
+                    ? "border-rose-500 focus:ring-rose-500"
+                    : "border-slate-300 dark:border-slate-700 focus:ring-blue-500"
+                } bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2`}
                 placeholder="e.g. Maya & Julian's Outdoor Wedding"
               />
+              {formErrors.title && (
+                <p
+                  id="title-error"
+                  className="text-xs text-rose-500 mt-1 flex items-center gap-1"
+                >
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  {formErrors.title}
+                </p>
+              )}
             </div>
             <div>
               <label
@@ -230,8 +272,25 @@ export function IntakeForm({
                     guestCount: parseInt(e.target.value, 10) || 1,
                   })
                 }
-                className="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                aria-invalid={!!formErrors.guestCount}
+                aria-describedby={
+                  formErrors.guestCount ? "guests-error" : undefined
+                }
+                className={`w-full px-3 py-2 text-sm rounded-lg border ${
+                  formErrors.guestCount
+                    ? "border-rose-500 focus:ring-rose-500"
+                    : "border-slate-300 dark:border-slate-700 focus:ring-blue-500"
+                } bg-white dark:bg-slate-800 text-slate-900 dark:text-white`}
               />
+              {formErrors.guestCount && (
+                <p
+                  id="guests-error"
+                  className="text-xs text-rose-500 mt-1 flex items-center gap-1"
+                >
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  {formErrors.guestCount}
+                </p>
+              )}
             </div>
           </div>
 
@@ -258,16 +317,33 @@ export function IntakeForm({
                       budget: parseFloat(e.target.value) || 50,
                     })
                   }
-                  className="w-full pl-3 pr-16 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+                  aria-invalid={!!formErrors.budget}
+                  aria-describedby={
+                    formErrors.budget ? "budget-error" : "budget-desc"
+                  }
+                  className={`w-full pl-3 pr-16 py-2 text-sm rounded-lg border ${
+                    formErrors.budget
+                      ? "border-rose-500 focus:ring-rose-500"
+                      : "border-slate-300 dark:border-slate-700 focus:ring-blue-500"
+                  } bg-white dark:bg-slate-800 text-slate-900 dark:text-white`}
                 />
                 <span className="absolute right-3 top-2 text-xs font-bold text-slate-400">
                   {formData.currency}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 mt-1">
+              <p id="budget-desc" className="text-[11px] text-slate-400 mt-1">
                 Plan-B automatically provisions an enforced mandatory &ge;8%
                 contingency buffer.
               </p>
+              {formErrors.budget && (
+                <p
+                  id="budget-error"
+                  className="text-xs text-rose-500 mt-1 flex items-center gap-1"
+                >
+                  <AlertCircle className="w-3.5 h-3.5" />
+                  {formErrors.budget}
+                </p>
+              )}
             </div>
 
             <div>

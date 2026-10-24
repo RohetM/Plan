@@ -29,6 +29,12 @@ export function TimelineView({
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Timeline & Run-of-Show
+        </h2>
+      </div>
+
       {/* Navigation & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
         <div className="flex items-center space-x-2">

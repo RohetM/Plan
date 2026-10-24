@@ -73,6 +73,12 @@ export function BudgetView({
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Resilient Budget Allocation
+        </h2>
+      </div>
+
       {/* Top Summary Banner */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">

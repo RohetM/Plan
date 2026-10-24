@@ -77,16 +77,16 @@ export function Header({
           <button
             onClick={onOpenIntake}
             className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition"
-            aria-label="Edit event intake details"
+            aria-label="New / Edit Plan"
           >
             <RefreshCw className="w-3.5 h-3.5" aria-hidden="true" />
-            <span className="hidden sm:inline">New / Edit</span> Plan
+            <span className="hidden sm:inline">New / Edit </span>Plan
           </button>
 
           <button
             onClick={onOpenDayOf}
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-white shadow-sm transition"
-            aria-label="Open Day-of Late Mode"
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-amber-700 hover:bg-amber-800 text-white shadow-sm transition"
+            aria-label="Day-Of Mode"
           >
             <Clock className="w-4 h-4" aria-hidden="true" />
             <span>Day-Of Mode</span>
@@ -95,7 +95,7 @@ export function Header({
           <button
             onClick={onOpenExport}
             className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium border border-slate-300 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition"
-            aria-label="Export or Print Plan"
+            aria-label="Export Plan"
           >
             <Download className="w-3.5 h-3.5" aria-hidden="true" />
             <span className="hidden sm:inline">Export</span>

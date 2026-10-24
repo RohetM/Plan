@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { TimelineItem, ReflowResponse } from "@/lib/validation/schemas";
 import { reflowTimeline } from "@/lib/timeline/reflowEngine";
+import { useModalFocus } from "@/lib/a11y/useModalFocus";
 import {
   X,
   Clock,
@@ -27,6 +28,7 @@ export function DayOfReflowModal({
   onClose,
   onApplyReflow,
 }: DayOfReflowModalProps) {
+  const modalRef = useModalFocus(true, onClose);
   const [delayMinutes, setDelayMinutes] = useState<number>(25);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
@@ -63,7 +65,10 @@ export function DayOfReflowModal({
       aria-labelledby="reflow-modal-title"
       className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
     >
-      <div className="relative w-full max-w-3xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 max-h-[90vh] flex flex-col">
+      <div
+        ref={modalRef}
+        className="relative w-full max-w-3xl bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 max-h-[90vh] flex flex-col"
+      >
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
           <div className="flex items-center space-x-2">

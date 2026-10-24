@@ -43,8 +43,21 @@ export async function generateEventPlan(
       systemInstruction: PLAN_SYSTEM_PROMPT,
     });
 
+    const withTimeout = <T>(promise: Promise<T>, ms: number, msg: string): Promise<T> => {
+      return Promise.race([
+        promise,
+        new Promise<T>((_, reject) =>
+          setTimeout(() => reject(new Error(msg)), ms)
+        ),
+      ]);
+    };
+
     const userPrompt = buildPlanUserPrompt(intake);
-    const result = await model.generateContent(userPrompt);
+    const result = await withTimeout(
+      model.generateContent(userPrompt),
+      15000,
+      "Gemini generation timed out after 15s"
+    );
     const text = result.response.text();
 
 interface LLMPlanItem {
@@ -88,8 +101,12 @@ interface LLMPlanResponse {
       parsed = JSON.parse(text) as LLMPlanResponse;
     } catch {
       // Retry once with strict JSON repair prompt
-      const retryResult = await model.generateContent(
-        `Your previous response was not valid JSON. Return the exact valid JSON object now with no markdown formatting.\n${userPrompt}`
+      const retryResult = await withTimeout(
+        model.generateContent(
+          `Your previous response was not valid JSON. Return the exact valid JSON object now with no markdown formatting.\n${userPrompt}`
+        ),
+        8000,
+        "Gemini JSON repair timed out after 8s"
       );
       parsed = JSON.parse(retryResult.response.text()) as LLMPlanResponse;
     }

@@ -28,12 +28,12 @@ export function VendorChecklistView({
       {/* Top Banner */}
       <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+          <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <span>Procurement & Vendor Risk Checklist</span>
             <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300">
               {bookedCount}/{vendors.length} Booked
             </span>
-          </h3>
+          </h2>
           <p className="text-xs text-slate-500">
             Categorized contract checklists, critical audit interview questions,
             and non-negotiable red flags.

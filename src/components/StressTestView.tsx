@@ -85,6 +85,12 @@ export function StressTestView({
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Disaster Stress-Testing Engine
+        </h2>
+      </div>
+
       {/* Scenario Selector Tabs */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {SCENARIOS.map((sc) => {
@@ -118,7 +124,13 @@ export function StressTestView({
                   {sc.label}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
+              <p
+                className={`text-[11px] mt-1 line-clamp-2 ${
+                  isActive
+                    ? "text-blue-900 dark:text-blue-200 font-medium"
+                    : "text-slate-600 dark:text-slate-400"
+                }`}
+              >
                 {sc.description}
               </p>
             </button>
@@ -177,7 +189,7 @@ export function StressTestView({
             >
               {overallRiskScore}
             </span>
-            <span className="text-sm text-slate-400 font-semibold">/ 100</span>
+            <span className="text-sm text-slate-600 dark:text-slate-400 font-semibold">/ 100</span>
           </div>
 
           {/* Progress bar */}
@@ -302,7 +314,7 @@ export function StressTestView({
                     </span>
                   )}
                   {item.timelineImpactMin > 0 && (
-                    <span className="flex items-center space-x-1 text-amber-600 dark:text-amber-400 font-semibold">
+                    <span className="flex items-center space-x-1 text-amber-800 dark:text-amber-300 font-semibold">
                       <Clock className="w-3.5 h-3.5" />
                       <span>+{item.timelineImpactMin}m shift</span>
                     </span>
@@ -319,7 +331,7 @@ export function StressTestView({
               </div>
 
               {/* Formula Factors */}
-              <div className="text-[11px] text-slate-400 flex flex-wrap gap-x-4">
+              <div className="text-[11px] text-slate-600 dark:text-slate-300 font-medium flex flex-wrap gap-x-4">
                 <span>Exposure: {Math.round(item.exposure * 100)}%</span>
                 <span>
                   Severity: {Math.round(item.scenarioSeverity * 100)}%

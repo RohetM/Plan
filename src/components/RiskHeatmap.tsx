@@ -39,12 +39,12 @@ export function RiskHeatmap({
 
   const getCellBadgeClass = (score: number) => {
     if (score <= 33) {
-      return "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-300";
+      return "bg-emerald-100 text-emerald-950 dark:bg-emerald-950 dark:text-emerald-100 border-emerald-400";
     }
     if (score <= 66) {
-      return "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border-amber-300";
+      return "bg-amber-100 text-amber-950 dark:bg-amber-950 dark:text-amber-100 border-amber-400";
     }
-    return "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300 border-rose-300";
+    return "bg-rose-100 text-rose-950 dark:bg-rose-950 dark:text-rose-100 border-rose-400";
   };
 
   return (
@@ -73,7 +73,6 @@ export function RiskHeatmap({
                 ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm"
                 : "text-slate-600 dark:text-slate-400"
             }`}
-            aria-label="Switch to visual heatmap view"
           >
             <LayoutGrid className="w-3.5 h-3.5" />
             <span>Heatmap Grid</span>
@@ -85,7 +84,6 @@ export function RiskHeatmap({
                 ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm"
                 : "text-slate-600 dark:text-slate-400"
             }`}
-            aria-label="Switch to accessible data table view"
           >
             <Table className="w-3.5 h-3.5" />
             <span>Accessible Table</span>
@@ -152,7 +150,7 @@ export function RiskHeatmap({
                           )}`}
                         >
                           <span>{cell.band}</span>
-                          <span className="opacity-75">({cell.score})</span>
+                          <span className="font-semibold">({cell.score})</span>
                         </div>
                       </td>
                     );
@@ -202,9 +200,12 @@ export function RiskHeatmap({
                   };
                   return (
                     <tr key={`${row.category}-${sc.id}`}>
-                      <td className="py-2 px-3 font-semibold text-slate-800 dark:text-slate-200">
+                      <th
+                        scope="row"
+                        className="py-2 px-3 font-semibold text-slate-800 dark:text-slate-200 text-left"
+                      >
                         {row.category}
-                      </td>
+                      </th>
                       <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
                         {sc.label}
                       </td>

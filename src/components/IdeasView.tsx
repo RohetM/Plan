@@ -29,9 +29,9 @@ export function IdeasView({
           <Sparkles className="w-4 h-4" />
           <span>Curated Event Concept</span>
         </div>
-        <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
           {ideas.theme}
-        </h3>
+        </h2>
         <p className="text-sm text-blue-100 max-w-2xl">
           Personalized aesthetic, menu, and experiential blueprint tailored
           directly to your guest requirements and location.
@@ -44,9 +44,9 @@ export function IdeasView({
         <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3">
           <div className="flex items-center space-x-2 text-pink-600 dark:text-pink-400">
             <Palette className="w-5 h-5" />
-            <h4 className="font-bold text-base text-slate-900 dark:text-white">
+            <h3 className="font-bold text-base text-slate-900 dark:text-white">
               Decor & Ambient Styling
-            </h4>
+            </h3>
           </div>
           <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
             {ideas.decorIdeas.map((idea, idx) => (
@@ -63,9 +63,9 @@ export function IdeasView({
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 text-amber-600 dark:text-amber-400">
               <Utensils className="w-5 h-5" />
-              <h4 className="font-bold text-base text-slate-900 dark:text-white">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">
                 Menu & Beverage Program
-              </h4>
+              </h3>
             </div>
             {dietaryRestrictions.length > 0 && (
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
@@ -87,9 +87,9 @@ export function IdeasView({
         <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm space-y-3">
           <div className="flex items-center space-x-2 text-purple-600 dark:text-purple-400">
             <PartyPopper className="w-5 h-5" />
-            <h4 className="font-bold text-base text-slate-900 dark:text-white">
+            <h3 className="font-bold text-base text-slate-900 dark:text-white">
               Guest Activities & Entertainment
-            </h4>
+            </h3>
           </div>
           <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
             {ideas.activitySuggestions.map((act, idx) => (
@@ -106,9 +106,9 @@ export function IdeasView({
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 text-emerald-700 dark:text-emerald-400">
               <HeartHandshake className="w-5 h-5" />
-              <h4 className="font-bold text-base text-slate-900 dark:text-white">
+              <h3 className="font-bold text-base text-slate-900 dark:text-white">
                 Universal Accessibility & Inclusivity
-              </h4>
+              </h3>
             </div>
             {accessibilityNeeds.length > 0 && (
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200">
