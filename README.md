@@ -14,7 +14,7 @@
 ---
 
 ## Live Demo
-**Production Demo URL:** [https://plan-b-event-stress-tester.vercel.app](https://plan-b-event-stress-tester.vercel.app) *(Live Demo Deployment)*
+**Production Demo URL:** [https://plan-pink-delta.vercel.app/](https://plan-pink-delta.vercel.app/) *(Live Production Deployment)*
 
 ---
 
