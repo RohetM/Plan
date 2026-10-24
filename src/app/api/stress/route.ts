@@ -8,7 +8,7 @@ import {
 } from "@/lib/validation/schemas";
 import { evaluateStressTest } from "@/lib/risk/riskEngine";
 import { runMonteCarloBudgetSimulation } from "@/lib/simulation/monteCarlo";
-import { checkRateLimit } from "@/lib/validation/security";
+import { checkRateLimit, parseJsonWithLimit } from "@/lib/validation/security";
 
 const StressRequestSchema = z.object({
   plan: FullPlanSchema,
@@ -27,7 +27,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const body = await req.json();
+    const { data: body, errorResponse } = await parseJsonWithLimit(req);
+    if (errorResponse) {
+      return errorResponse;
+    }
+
     const parseResult = StressRequestSchema.safeParse(body);
 
     if (!parseResult.success) {

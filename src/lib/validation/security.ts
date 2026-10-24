@@ -42,6 +42,8 @@ export function sanitizePromptInput(
   return sanitized.trim();
 }
 
+import { NextRequest, NextResponse } from "next/server";
+
 /**
  * In-memory token bucket rate limiter for local API endpoints.
  */
@@ -80,4 +82,47 @@ export function checkRateLimit(clientIp: string): {
   }
 
   return { allowed: false, remaining: 0 };
+}
+
+export function resetRateLimitForTesting(): void {
+  rateLimitMap.clear();
+}
+
+export const MAX_BODY_BYTES = 100_000; // 100 KB limit
+
+export async function parseJsonWithLimit<T = unknown>(
+  req: NextRequest,
+  maxBytes: number = MAX_BODY_BYTES
+): Promise<{ data?: T; errorResponse?: NextResponse }> {
+  const contentLength = req.headers.get("content-length");
+  if (contentLength && parseInt(contentLength, 10) > maxBytes) {
+    return {
+      errorResponse: NextResponse.json(
+        { error: `Payload too large. Maximum body size is ${maxBytes} bytes.` },
+        { status: 413 }
+      ),
+    };
+  }
+
+  const rawText = await req.text();
+  if (rawText.length > maxBytes) {
+    return {
+      errorResponse: NextResponse.json(
+        { error: `Payload too large. Maximum body size is ${maxBytes} bytes.` },
+        { status: 413 }
+      ),
+    };
+  }
+
+  try {
+    const data = JSON.parse(rawText) as T;
+    return { data };
+  } catch {
+    return {
+      errorResponse: NextResponse.json(
+        { error: "Invalid JSON format in request body." },
+        { status: 400 }
+      ),
+    };
+  }
 }

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { TimelineItemSchema } from "@/lib/validation/schemas";
 import { reflowTimeline } from "@/lib/timeline/reflowEngine";
+import { checkRateLimit, parseJsonWithLimit } from "@/lib/validation/security";
 
 const ReflowBodySchema = z.object({
   timeline: z.array(TimelineItemSchema),
@@ -12,7 +13,21 @@ const ReflowBodySchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const ip = req.headers.get("x-forwarded-for") || "127.0.0.1";
+    const { allowed, remaining } = checkRateLimit(ip);
+
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Rate limit exceeded. Please try again shortly." },
+        { status: 429, headers: { "X-RateLimit-Remaining": "0" } }
+      );
+    }
+
+    const { data: body, errorResponse } = await parseJsonWithLimit(req);
+    if (errorResponse) {
+      return errorResponse;
+    }
+
     const parseResult = ReflowBodySchema.safeParse(body);
 
     if (!parseResult.success) {
@@ -38,6 +53,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(reflowResponse, {
       status: 200,
       headers: {
+        "X-RateLimit-Remaining": remaining.toString(),
         "X-Content-Type-Options": "nosniff",
       },
     });

@@ -130,8 +130,8 @@ When an event runs behind schedule:
 - **Zero Secrets in Repository:** `GEMINI_API_KEY` stored exclusively in environment variables. `.env` is git-ignored; `.env.example` provided.
 - **Prompt Injection Defense:** Neutralizes system delimiters (`[SYSTEM]`, `[INSTRUCTION]`, backticks) and limits string lengths. User data enclosed in `<EVENT_DATA>` tags.
 - **XSS Prevention:** HTML characters are escaped prior to output rendering.
-- **Rate Limiting:** In-memory token bucket limits API calls to 60 requests per minute per IP.
-- **Security Headers:** `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, and strict cache control.
+- **Rate Limiting:** In-memory token bucket limits API calls to 60 requests per minute per IP. Note: The in-memory rate limiter is per-instance and suited to demo use (in multi-instance cloud deployments, a distributed store such as Redis/Upstash is recommended).
+- **Security Headers:** Configured in `next.config.ts` covering `Content-Security-Policy`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, and `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
 
 ---
 

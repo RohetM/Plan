@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { EventIntakeSchema } from "@/lib/validation/schemas";
-import { checkRateLimit } from "@/lib/validation/security";
+import { checkRateLimit, parseJsonWithLimit } from "@/lib/validation/security";
 import { generateEventPlan } from "@/lib/llm/geminiClient";
 
 export async function POST(req: NextRequest) {
@@ -18,7 +18,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const body = await req.json();
+    const { data: body, errorResponse } = await parseJsonWithLimit(req);
+    if (errorResponse) {
+      return errorResponse;
+    }
+
     const parseResult = EventIntakeSchema.safeParse(body);
 
     if (!parseResult.success) {
