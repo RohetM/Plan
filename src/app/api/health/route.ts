@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
         monteCarlo: "deterministic",
         timelineReflow: "deterministic",
         llm: process.env.GEMINI_API_KEY
-          ? "gemini-1.5-flash (active)"
+          ? "gemini-3.8-flash (active)"
           : "deterministic-fallback (ready)",
       },
     },

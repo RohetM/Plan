@@ -238,6 +238,29 @@ export default function PlanBApp() {
               <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-medium">
                 {plan.intake.locationType} venue
               </span>
+              {plan.isFallback ? (
+                <span
+                  className="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium border border-slate-300 dark:border-slate-700 flex items-center gap-1.5"
+                  title="Deterministic template fallback engine active"
+                >
+                  <span
+                    className="w-1.5 h-1.5 rounded-full bg-amber-500"
+                    aria-hidden="true"
+                  ></span>
+                  Fallback Engine
+                </span>
+              ) : (
+                <span
+                  className="text-xs px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-medium border border-emerald-200 dark:border-emerald-800 flex items-center gap-1.5"
+                  title="Synthesized live with Gemini AI"
+                >
+                  <span
+                    className="w-1.5 h-1.5 rounded-full bg-emerald-500"
+                    aria-hidden="true"
+                  ></span>
+                  Gemini AI Active
+                </span>
+              )}
               {plan.intake.dietary.length > 0 && (
                 <span className="text-xs px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-900">
                   {plan.intake.dietary.join(", ")}
