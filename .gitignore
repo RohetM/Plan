@@ -15,6 +15,7 @@ playwright-report/
 
 # Demo & recordings
 demo/
+scratch_clone/
 
 # Next.js build output
 .next/
